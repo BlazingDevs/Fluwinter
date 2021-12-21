@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'First Page',
       theme: ThemeData(
-        scaffoldBackgroundColor: Colors.amber,
+        scaffoldBackgroundColor: Colors.white,
         primarySwatch: Colors.blue,
       ),
       home: logoPage(),
