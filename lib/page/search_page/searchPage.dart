@@ -18,71 +18,80 @@ class _searchPageState extends State<searchPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: kMainColor,
-        shadowColor: kGreyColor,
+        shadowColor: kMainColor,
         title: Text('Search Page'),
         ),
-      body: Stack(
-        children: <Widget>[
-          Container(
-            child: Column(children: <Widget>[
-              SearchBar(),
-              InkWell(
-                 child: Row(
-                  children: [
-                    SizedBox(width: 20,height: 20,),
-                    Text('내 주변 카페 찾기',style: 
-                      TextStyle(fontSize: 20.0),)
-                    ],
+      body: Center(
+        child: Stack(
+          children: <Widget>[
+            Container(
+              // decoration: BoxDecoration(
+              //   color: Colors.red[50],
+              //),
+              child: Column(children: <Widget>[
+                SearchBar(),
+                SizedBox(height: 40,),
+                InkWell(
+                   customBorder:RoundedRectangleBorder(borderRadius: BorderRadius.circular(10),),
+                   child: Row(
+                    children: [
+                      SizedBox(width: 100,),
+                      Text('내 주변 카페 찾기',style: 
+                        TextStyle(fontSize: 30.0, letterSpacing: 2.0,fontWeight: FontWeight.normal),)
+                      ],
+                    ),
+                  onTap: (){
+                    Navigator.push(
+                      context, 
+                      MaterialPageRoute(
+                        builder: (context) => mapPage()
+                        ),
+                     );
+                  },
                   ),
-                onTap: (){
-                  Navigator.push(
-                    context, 
-                    MaterialPageRoute(
-                      builder: (context) => mapPage()
-                      ),
-                   );
-                },
-                ),
-              InkWell(
-                child: Row(
-                  children: [
-                    SizedBox(width: 20,height: 20,),
-                    Text('카테고리별 카페 찾기',style: 
-                      TextStyle(fontSize: 20.0),)
-                    ],
+                SizedBox(height: 40,),
+                InkWell(
+                  child: Row(
+                    children: [
+                      SizedBox(width: 90,),
+                      Text('카테고리별 카페 찾기',style: 
+                        TextStyle(fontSize: 30.0, letterSpacing: 2.0,fontWeight: FontWeight.normal),)
+                      ],
+                    ),
+                    onTap: (){
+                    Navigator.push(
+                      context, 
+                      MaterialPageRoute(
+                        builder: (context) => tagPage()
+                        ),
+                     );
+                  },
+                  ),
+                SizedBox(height: 40,),  
+                InkWell(
+                  child: Row(
+                    children: [
+                      SizedBox(width: 105),
+                        Text('즐겨찾는 카페 찾기',style: 
+                          TextStyle(fontSize: 30.0, letterSpacing: 2.0,fontWeight: FontWeight.normal),)
+                        ],
                   ),
                   onTap: (){
-                  Navigator.push(
-                    context, 
-                    MaterialPageRoute(
-                      builder: (context) => tagPage()
-                      ),
-                   );
-                },
-                ),
-              InkWell(
-                child: Row(
-                  children: [
-                    SizedBox(width: 20,height: 20,),
-                      Text('즐겨찾는 카페 찾기',style: 
-                        TextStyle(fontSize: 20.0),)
-                      ],
-                ),
-                onTap: (){
-                  Navigator.push(
-                    context, 
-                    MaterialPageRoute(
-                      builder: (context) => favoritesPage()
-                      ),
-                   );
-                },
-                
+                    Navigator.push(
+                      context, 
+                      MaterialPageRoute(
+                        builder: (context) => favoritesPage()
+                        ),
+                     );
+                  },
+                  
+                )
+              ],
+              ),
               )
-            ],
-            ),
-            )
-            ],
-            ),
+              ],
+              ),
+      ),
     );
   }
 }
