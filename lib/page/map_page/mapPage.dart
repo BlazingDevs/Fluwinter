@@ -15,7 +15,12 @@ class _mapPageState extends State<mapPage> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0.0,
-        leading: const Icon(Icons.arrow_back_ios),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
         backgroundColor: Colors.transparent,
         shadowColor: kGreyColor,
         title: Text('Map Page'),
