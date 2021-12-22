@@ -14,9 +14,18 @@ class _mapPageState extends State<mapPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: kMainColor,
+        elevation: 0.0,
+        leading: const Icon(Icons.arrow_back_ios),
+        backgroundColor: Colors.transparent,
         shadowColor: kGreyColor,
         title: Text('Map Page'),
+        actions: [
+          IconButton(
+              icon: Icon(Icons.add_location),
+              onPressed: () {
+                print("location button is pressed");
+              })
+        ],
       ),
     );
   }
