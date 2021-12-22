@@ -9,41 +9,49 @@ class detailPage extends StatefulWidget {
 }
 
 class _detailPageState extends State<detailPage> {
+  PreferredSizeWidget _appBarWidget() {
+    return AppBar(
+      elevation: 0,
+      leading: IconButton(
+        icon: const Icon(Icons.arrow_back_ios),
+        onPressed: () {
+          Navigator.pop(context);
+        },
+      ),
+      backgroundColor: Colors.transparent,
+      actions: [
+        IconButton(
+          icon: Icon(Icons.bookmark_outline),
+          onPressed: () {
+            print('book mark button is pressed');
+          },
+        ),
+        IconButton(
+          icon: Icon(Icons.location_pin),
+          onPressed: () {
+            print('location_pin button is pressed');
+          },
+        ),
+      ],
+    );
+  }
+
+  Widget _bodyWidget() {
+    return Container(
+      decoration: const BoxDecoration(
+        image: DecorationImage(
+          fit: BoxFit.cover,
+          image: AssetImage('assets/sample_image.jpg'),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         extendBodyBehindAppBar: true,
-        appBar: AppBar(
-          elevation: 0,
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back_ios),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
-          backgroundColor: Colors.transparent,
-          actions: [
-            IconButton(
-              icon: Icon(Icons.bookmark_outline),
-              onPressed: () {
-                print('book mark button is pressed');
-              },
-            ),
-            IconButton(
-              icon: Icon(Icons.location_pin),
-              onPressed: () {
-                print('location_pin button is pressed');
-              },
-            ),
-          ],
-        ),
-        body: Container(
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-              fit: BoxFit.cover,
-              image: AssetImage('assets/sample_image.jpg'),
-            ),
-          ),
-        ));
+        appBar: _appBarWidget(),
+        body: _bodyWidget());
   }
 }
