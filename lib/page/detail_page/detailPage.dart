@@ -41,6 +41,7 @@ class _detailPageState extends State<detailPage> {
     return SingleChildScrollView(
       child: Stack(
         children: <Widget>[
+          // 가게 대표 사진
           Container(
             width: double.infinity,
             height: size.height * 0.5,
@@ -54,32 +55,62 @@ class _detailPageState extends State<detailPage> {
             margin: EdgeInsets.only(top: size.height * 0.45),
             width: double.infinity,
             decoration: BoxDecoration(
-                color: Colors.white, borderRadius: BorderRadius.circular(50)),
+                color: Colors.white, borderRadius: BorderRadius.circular(30)),
             child: Padding(
-                padding: const EdgeInsets.all(30),
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // 가게 이름
+                  const Text(
+                    'CafeNamu',
+                    style: TextStyle(fontSize: 30, height: 1.5),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  // 태그
+                  Row(
                     children: [
-                      Align(
-                          child: Container(
-                        width: 150,
-                        height: 7,
+                      Container(
                         decoration: BoxDecoration(
-                            color: kGreyColor,
-                            borderRadius: BorderRadius.circular(10)),
-                      )),
+                            border: Border.all(color: Colors.grey),
+                            borderRadius: BorderRadius.circular(30)),
+                        child: const Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Text('조용한'),
+                        ),
+                      ),
                       const SizedBox(
-                        height: 20,
+                        width: 10,
                       ),
-                      const Text(
-                        'CafeNamu',
-                        style: TextStyle(fontSize: 20, height: 1.5),
+                      Container(
+                        decoration: BoxDecoration(
+                            border: Border.all(color: Colors.grey),
+                            borderRadius: BorderRadius.circular(30)),
+                        child: const Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Text('분위기 있는'),
+                        ),
                       ),
-                      SizedBox(
-                        height: 20,
+                      const SizedBox(
+                        width: 10,
                       ),
-                    ])),
-          )
+                      Container(
+                        decoration: BoxDecoration(
+                            border: Border.all(color: Colors.grey),
+                            borderRadius: BorderRadius.circular(30)),
+                        child: const Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Text('커피가 맛있는'),
+                        ),
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            ),
+          ),
         ],
       ),
     );
