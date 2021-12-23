@@ -21,13 +21,13 @@ class _detailPageState extends State<detailPage> {
       backgroundColor: Colors.transparent,
       actions: [
         IconButton(
-          icon: Icon(Icons.bookmark_outline),
+          icon: const Icon(Icons.bookmark_outline),
           onPressed: () {
             print('book mark button is pressed');
           },
         ),
         IconButton(
-          icon: Icon(Icons.location_pin),
+          icon: const Icon(Icons.location_pin),
           onPressed: () {
             print('location_pin button is pressed');
           },
@@ -64,21 +64,28 @@ class _detailPageState extends State<detailPage> {
                   // 가게 이름
                   const Text(
                     'CafeNamu',
-                    style: TextStyle(fontSize: 30, height: 1.5),
+                    style: TextStyle(
+                      fontSize: 30,
+                      height: 1.5,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                   const SizedBox(
-                    height: 20,
+                    height: 7,
                   ),
                   // 태그
                   Row(
                     children: [
                       Container(
                         decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey),
-                            borderRadius: BorderRadius.circular(30)),
+                            borderRadius: BorderRadius.circular(30),
+                            color: kGreyColor),
                         child: const Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: Text('조용한'),
+                          padding: EdgeInsets.all(7.0),
+                          child: Text(
+                            '조용한',
+                            style: TextStyle(fontSize: 11),
+                          ),
                         ),
                       ),
                       const SizedBox(
@@ -86,11 +93,14 @@ class _detailPageState extends State<detailPage> {
                       ),
                       Container(
                         decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey),
-                            borderRadius: BorderRadius.circular(30)),
+                            borderRadius: BorderRadius.circular(30),
+                            color: kGreyColor),
                         child: const Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: Text('분위기 있는'),
+                          padding: EdgeInsets.all(7.0),
+                          child: Text(
+                            '분위기 있는',
+                            style: TextStyle(fontSize: 11),
+                          ),
                         ),
                       ),
                       const SizedBox(
@@ -98,15 +108,40 @@ class _detailPageState extends State<detailPage> {
                       ),
                       Container(
                         decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey),
-                            borderRadius: BorderRadius.circular(30)),
+                            borderRadius: BorderRadius.circular(30),
+                            color: kGreyColor),
                         child: const Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: Text('커피가 맛있는'),
+                          padding: EdgeInsets.all(7.0),
+                          child: Text(
+                            '커피가 맛있는',
+                            style: TextStyle(fontSize: 11),
+                          ),
                         ),
                       ),
                     ],
-                  )
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  const Text(
+                    'MENU',
+                    style: TextStyle(
+                      height: 1.6,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  const Text(
+                    'REVIEW',
+                    style: TextStyle(
+                      height: 1.6,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ],
               ),
             ),
