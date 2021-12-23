@@ -38,6 +38,7 @@ class _detailPageState extends State<detailPage> {
 
   Widget _bodyWidget() {
     var size = MediaQuery.of(context).size;
+
     return SingleChildScrollView(
       child: Stack(
         children: <Widget>[
@@ -121,7 +122,7 @@ class _detailPageState extends State<detailPage> {
                     ],
                   ),
                   const SizedBox(
-                    height: 20,
+                    height: 15,
                   ),
                   const Text(
                     'MENU',
@@ -132,7 +133,28 @@ class _detailPageState extends State<detailPage> {
                     ),
                   ),
                   const SizedBox(
-                    height: 20,
+                    height: 5,
+                  ),
+                  // 메뉴판
+                  Container(
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: kGreyColor,
+                        width: 2,
+                      ),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: const Padding(
+                      padding: EdgeInsets.all(7.0),
+                      child: Text(
+                        '- 아메리카노\n- 카페 라떼\n- 바닐라 라뗴\n- 핫초코',
+                        style: TextStyle(fontSize: 13),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10.0,
                   ),
                   const Text(
                     'REVIEW',
@@ -140,6 +162,27 @@ class _detailPageState extends State<detailPage> {
                       height: 1.6,
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  // 리뷰
+                  Container(
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: kGreyColor,
+                        width: 2,
+                      ),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: const Padding(
+                      padding: EdgeInsets.all(7.0),
+                      child: Text(
+                        '- 여기 불친절해요\n- 커피 맛집',
+                        style: TextStyle(fontSize: 13),
+                      ),
                     ),
                   ),
                 ],
