@@ -23,13 +23,30 @@ class _logoPageState extends State<logoPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.grey[850],
-        body: Center(
-            child: Container(
-          child: Text(
-            "카페게이션",
-            style: TextStyle(fontSize: 45.0, color: Colors.pinkAccent),
-          ),
-        )));
+      backgroundColor: Colors.brown,
+      body: Container(
+        decoration: BoxDecoration(color: Color(0xff281901)),
+        child: Column(
+          children: <Widget>[
+            Expanded(
+              child: Center(
+                child: Text(" "),
+              ),
+            ),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Padding(
+                padding: const EdgeInsets.all(30.0),
+                child: Text(
+                  "Cafégation",
+                  style: TextStyle(
+                      fontFamily: 'oswa', fontSize: 50.0, color: Colors.white),
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
   }
 }
