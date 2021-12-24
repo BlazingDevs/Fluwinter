@@ -6,7 +6,7 @@ import 'package:cafegation/page/tag_page/tagPage.dart';
 import 'package:flutter/material.dart';
 
 class searchPage extends StatefulWidget {
-  const searchPage({ Key? key }) : super(key: key);
+  const searchPage({Key? key}) : super(key: key);
 
   @override
   _searchPageState createState() => _searchPageState();
@@ -20,114 +20,87 @@ class _searchPageState extends State<searchPage> {
         backgroundColor: kMainColor,
         shadowColor: kMainColor,
         title: Text('Search Page'),
-        ),
-      body: Center(
-        child: Stack(
-          children: <Widget>[
-            Container(
-              child: Column(children: <Widget>[
-                SearchBar(),
-                SizedBox(height: 30,),
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(10.0),
-                  child: Container(
-                    width: 390,
-                    height: 120,
-                    color: Colors.green[100],
-                    child: Column(
-                      children: <Widget>[
-                        SizedBox(height: 30,),
-                        InkWell(
-                          customBorder:RoundedRectangleBorder(borderRadius: BorderRadius.circular(10),),
-                          child: Row(
-                            children: [
-                          SizedBox(width: 60 ,),
-                          Text('내 주변 카페 찾기',style: 
-                          TextStyle(fontSize: 30.0, letterSpacing: 2.0,fontWeight: FontWeight.normal),)
-                        ],
-                      ),
-                    onTap: (){
-                      Navigator.push(
-                        context, 
-                        MaterialPageRoute(
-                          builder: (context) => mapPage()
-                          ),
-                       );
-                    },
-                    ),
-                    SizedBox(height: 30,),  
-                      ],),
-                  ),
-                ),
-                SizedBox(height: 30,),  
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(10.0),
-                  child: Container(
-                    width: 390,
-                    height: 120,
-                    color: Colors.blue[100],
-                    child: Column(
-                      children: <Widget>[
-                        SizedBox(height: 30,),
-                          InkWell(
-                        child: Row(
-                          children: [
-                          SizedBox(width: 40,),
-                          Text('카테고리별 카페 찾기',style: 
-                          TextStyle(fontSize: 30.0, letterSpacing: 2.0,fontWeight: FontWeight.normal),)
-                        ],
-                      ),
-                      onTap: (){
-                      Navigator.push(
-                        context, 
-                        MaterialPageRoute(
-                          builder: (context) => tagPage()
-                          ),
-                       );
-                    },
-                    ),
-                    SizedBox(height: 30,),  
-                      ],),
-                  ),
-                ),
-                SizedBox(height: 30,),  
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(10.0),
-                  child: Container(
-                    width: 390,
-                    height: 120,
-                    color: Colors.purple[100],
-                    child: Column(
-                      children: <Widget>[
-                        SizedBox(height: 30,),  
-                        InkWell(
-                          child: Row(
-                            children: [
-                            SizedBox(width: 50),
-                            Text('즐겨찾는 카페 찾기',style: 
-                            TextStyle(fontSize: 30.0, letterSpacing: 2.0,fontWeight: FontWeight.normal),)
-                          ],
-                          ),
-                          onTap: (){
-                            Navigator.push(
-                              context, 
-                            MaterialPageRoute(
-                            builder: (context) => favoritesPage()
-                            ),
-                          );
+      ),
+      body: SafeArea(
+        child: Center(
+          child: Stack(
+            children: <Widget>[
+              Container(
+                child: Column(
+                  children: <Widget>[
+                    SearchBar(),
+                    SizedBox(height: 30),
+                    Container(
+                      width: MediaQuery.of(context).size.width * 0.8,
+                      height: MediaQuery.of(context).size.height * 0.09,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            primary: Colors.pink[100], onPrimary: Colors.black),
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => mapPage()));
                         },
-                          
+                        child: Text(
+                          '내 주변 카페 찾기',
+                          style: TextStyle(
+                              fontSize: 30.0,
+                              letterSpacing: 2.0,
+                              fontWeight: FontWeight.normal),
                         ),
-                        SizedBox(height: 30,),  
+                      ),
+                    ),
+                    SizedBox(height: 30),
+                    Container(
+                      width: MediaQuery.of(context).size.width * 0.8,
+                      height: MediaQuery.of(context).size.height * 0.09,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            primary: Colors.pink[100], onPrimary: Colors.black),
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => tagPage()));
+                        },
+                        child: Text(
+                          '카테고리별 카페 찾기',
+                          style: TextStyle(
+                              fontSize: 30.0,
+                              letterSpacing: 2.0,
+                              fontWeight: FontWeight.normal),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 30),
+                    Container(
+                      width: MediaQuery.of(context).size.width * 0.8,
+                      height: MediaQuery.of(context).size.height * 0.09,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            primary: Colors.pink[100], onPrimary: Colors.black),
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => favoritesPage()));
+                        },
+                        child: Text(
+                          '즐겨찾는 카페 찾기',
+                          style: TextStyle(
+                              fontSize: 30.0,
+                              letterSpacing: 2.0,
+                              fontWeight: FontWeight.normal),
+                        ),
+                      ),
+                    ),
                   ],
-                  ),
-                  ),
-                )
-              ],
-              ),
+                ),
               )
-              ],
-              ),
+            ],
+          ),
+        ),
       ),
     );
   }
