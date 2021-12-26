@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cafegation/models/cafe.dart';
-import 'package:firebase_core/firebase_core.dart';
 
 class DataBaseService {
   
@@ -30,7 +29,8 @@ class DataBaseService {
         name: doc['name'],
         telephone: doc['telephone'],
         location: doc['location'],
-        rating: doc['rating']
+        rating: doc['rating'],
+        images: List.from( doc['images'] )
       );
     }).toList();
   }

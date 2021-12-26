@@ -15,11 +15,21 @@ class _FavoriteCafeListState extends State<FavoriteCafeList> {
   Widget build(BuildContext context) {
     final cafes = Provider.of<List<Cafe>>(context);
 
-    return ListView.builder(
-      itemCount: cafes.length,
-      itemBuilder: (context, index){
-        return FavoriteCafeItem(cafe: cafes[index]);
-      },
+    return Column(
+      children: [
+        Container(
+          margin: EdgeInsets.all(15.0),
+          child: Text('총 ${cafes.length}개'),
+        ),
+        Flexible(
+          child: ListView.builder(
+            itemCount: cafes.length,
+            itemBuilder: (context, index){
+              return FavoriteCafeItem(cafe: cafes[index]);
+            },
+          ),
+        )
+      ]
     );
   }
 }
