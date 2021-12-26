@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "898555262184",
+    "project_id": "cafegation",
+    "storage_bucket": "cafegation.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:898555262184:android:1ab985634fd177e457455d",
+        "android_client_info": {
+          "package_name": "com.example.cafegation"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "898555262184-vjfiu3gsqn53lclf7ns7lvoljgqekb60.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCooi1f8KBTiXwwKe9QBfKw5oxRYhcoGC4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "898555262184-vjfiu3gsqn53lclf7ns7lvoljgqekb60.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
