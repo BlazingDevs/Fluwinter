@@ -21,7 +21,7 @@ class _listPageState extends State<listPage> {
       body: Stack(children: <Widget>[
         SafeArea(
             child: Padding(
-          padding: const EdgeInsets.all(20.0),
+          padding: const EdgeInsets.all(17.0),
           child: ListView.separated(
             itemCount: 20,
             itemBuilder: (context, index) {
@@ -38,7 +38,7 @@ class _listPageState extends State<listPage> {
                 ),
                 subtitle: Text(
                   "  08:00 ~ 22:00\n  홍익대학교 정문 L층",
-                  style: TextStyle(fontSize: 16.0),
+                  style: TextStyle(fontSize: 14.0),
                 ),
                 leading: ClipRRect(
                     borderRadius: BorderRadius.only(
@@ -51,7 +51,12 @@ class _listPageState extends State<listPage> {
                           'https://coffee.dankook.ac.kr/html_portlet_repositories/images/ExtImgFile/10158/1766093/1952287/42012.png'),
                     )),
                 contentPadding:
-                    EdgeInsets.symmetric(vertical: 20.0, horizontal: 0.0),
+                    EdgeInsets.symmetric(vertical: 5.0, horizontal: 0.0),
+                trailing: Icon(
+                  Icons.favorite,
+                  color: Colors.red,
+                  size: 25.0,
+                ),
               );
             },
             separatorBuilder: (context, index) {

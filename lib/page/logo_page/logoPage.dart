@@ -25,7 +25,7 @@ class _logoPageState extends State<logoPage> {
     return Scaffold(
       backgroundColor: Colors.brown,
       body: Container(
-        decoration: BoxDecoration(color: Color(0xff281901)),
+        decoration: BoxDecoration(color: Color(0xFFF7B938)),
         child: Column(
           children: <Widget>[
             Expanded(
