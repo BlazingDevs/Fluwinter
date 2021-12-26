@@ -17,8 +17,8 @@ class _searchPageState extends State<searchPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: kMainColor,
-        shadowColor: kMainColor,
+        backgroundColor: Colors.amber,
+        shadowColor: Colors.orange,
         title: Text('Search Page'),
       ),
       body: SafeArea(
