@@ -6,7 +6,7 @@ import 'package:cafegation/page/tag_page/tagPage.dart';
 import 'package:flutter/material.dart';
 
 class searchPage extends StatefulWidget {
-  const searchPage({ Key? key }) : super(key: key);
+  const searchPage({Key? key}) : super(key: key);
 
   @override
   _searchPageState createState() => _searchPageState();
@@ -16,73 +16,123 @@ class _searchPageState extends State<searchPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,   
       appBar: AppBar(
-        backgroundColor: kMainColor,
-        shadowColor: kGreyColor,
+        backgroundColor: Colors.amber,
+        shadowColor: Colors.orange,
         title: Text('Search Page'),
-        ),
-      body: Stack(
-        children: <Widget>[
-          Container(
-            child: Column(children: <Widget>[
-              SearchBar(),
-              InkWell(
-                 child: Row(
-                  children: [
-                    SizedBox(width: 20,height: 20,),
-                    Text('내 주변 카페 찾기',style: 
-                      TextStyle(fontSize: 20.0),)
-                    ],
-                  ),
-                onTap: (){
-                  Navigator.push(
-                    context, 
-                    MaterialPageRoute(
-                      builder: (context) => mapPage()
+      ),
+      body: SafeArea(
+        child: Center(
+          child: Stack(
+            children: <Widget>[
+              Container(
+                child: Column(
+                  children: <Widget>[
+                    SearchBar(),
+                    SizedBox(height: 30),
+                    Container(
+                      width: MediaQuery.of(context).size.width * 0.9,
+                      height: MediaQuery.of(context).size.height * 0.09,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            shape: new RoundedRectangleBorder(
+                              borderRadius: new BorderRadius.circular(25.0),
+                            ),
+                            primary: Color(0xFF2C2E43),
+                            onPrimary: Colors.black),
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => mapPage()));
+                        },
+                        child: Row(
+                          children: <Widget>[
+                            Icon(Icons.location_on,color: Colors.white,),
+                            SizedBox(width: 15,),
+                            Text(
+                            '내 주변 카페 찾기',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 23.0,
+                                letterSpacing: 5.0,
+                                fontWeight: FontWeight.normal),
+                          ),]
+                        ),
                       ),
-                   );
-                },
-                ),
-              InkWell(
-                child: Row(
-                  children: [
-                    SizedBox(width: 20,height: 20,),
-                    Text('카테고리별 카페 찾기',style: 
-                      TextStyle(fontSize: 20.0),)
-                    ],
-                  ),
-                  onTap: (){
-                  Navigator.push(
-                    context, 
-                    MaterialPageRoute(
-                      builder: (context) => tagPage()
+                    ),
+                    SizedBox(height: 30),
+                    Container(
+                      width: MediaQuery.of(context).size.width * 0.9,
+                      height: MediaQuery.of(context).size.height * 0.09,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            shape: new RoundedRectangleBorder(
+                              borderRadius: new BorderRadius.circular(25.0),
+                            ),
+                            primary: Color(0xFF2C2E43),
+                            onPrimary: Colors.black),
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => tagPage()));
+                        },
+                        child: Row(
+                          children: <Widget>[
+                            Icon(Icons.menu,color: Colors.white,),
+                            SizedBox(width: 15,),
+                            Text(
+                            '카테고리별 카페 찾기',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 23.0,
+                                letterSpacing: 5.0,
+                                fontWeight: FontWeight.normal),
+                          ),]
+                        ),
                       ),
-                   );
-                },
-                ),
-              InkWell(
-                child: Row(
-                  children: [
-                    SizedBox(width: 20,height: 20,),
-                      Text('즐겨찾는 카페 찾기',style: 
-                        TextStyle(fontSize: 20.0),)
-                      ],
-                ),
-                onTap: (){
-                  Navigator.push(
-                    context, 
-                    MaterialPageRoute(
-                      builder: (context) => favoritesPage()
+                    ),
+                    SizedBox(height: 30),
+                    Container(
+                      width: MediaQuery.of(context).size.width * 0.9,
+                      height: MediaQuery.of(context).size.height * 0.09,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            shape: new RoundedRectangleBorder(
+                              borderRadius: new BorderRadius.circular(25.0),
+                            ),
+                            primary: Color(0xFF2C2E43),
+                            onPrimary: Colors.black),
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => favoritesPage()));
+                        },
+                        child: Row(
+                          children: <Widget>[
+                            Icon(Icons.favorite_border,color: Colors.white,),
+                            SizedBox(width: 15,),
+                            Text(
+                            '즐겨찾는 카페 찾기',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 23.0,
+                                letterSpacing: 5.0,
+                                fontWeight: FontWeight.normal),
+                          ),]
+                        ),
                       ),
-                   );
-                },
-                
+                    ),
+                  ],
+                ),
               )
             ],
-            ),
-            )
-            ],
-            ),
+          ),
+        ),
+      ),
     );
   }
 }
