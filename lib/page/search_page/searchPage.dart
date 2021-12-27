@@ -16,6 +16,7 @@ class _searchPageState extends State<searchPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,   
       appBar: AppBar(
         backgroundColor: Colors.amber,
         shadowColor: Colors.orange,
@@ -31,67 +32,97 @@ class _searchPageState extends State<searchPage> {
                     SearchBar(),
                     SizedBox(height: 30),
                     Container(
-                      width: MediaQuery.of(context).size.width * 0.8,
+                      width: MediaQuery.of(context).size.width * 0.9,
                       height: MediaQuery.of(context).size.height * 0.09,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                            primary: Colors.pink[100], onPrimary: Colors.black),
+                            shape: new RoundedRectangleBorder(
+                              borderRadius: new BorderRadius.circular(25.0),
+                            ),
+                            primary: Color(0xFF2C2E43),
+                            onPrimary: Colors.black),
                         onPressed: () {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
                                   builder: (context) => mapPage()));
                         },
-                        child: Text(
-                          '내 주변 카페 찾기',
-                          style: TextStyle(
-                              fontSize: 30.0,
-                              letterSpacing: 2.0,
-                              fontWeight: FontWeight.normal),
+                        child: Row(
+                          children: <Widget>[
+                            Icon(Icons.location_on,color: Colors.white,),
+                            SizedBox(width: 15,),
+                            Text(
+                            '내 주변 카페 찾기',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 23.0,
+                                letterSpacing: 5.0,
+                                fontWeight: FontWeight.normal),
+                          ),]
                         ),
                       ),
                     ),
                     SizedBox(height: 30),
                     Container(
-                      width: MediaQuery.of(context).size.width * 0.8,
+                      width: MediaQuery.of(context).size.width * 0.9,
                       height: MediaQuery.of(context).size.height * 0.09,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                            primary: Colors.pink[100], onPrimary: Colors.black),
+                            shape: new RoundedRectangleBorder(
+                              borderRadius: new BorderRadius.circular(25.0),
+                            ),
+                            primary: Color(0xFF2C2E43),
+                            onPrimary: Colors.black),
                         onPressed: () {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
                                   builder: (context) => tagPage()));
                         },
-                        child: Text(
-                          '카테고리별 카페 찾기',
-                          style: TextStyle(
-                              fontSize: 30.0,
-                              letterSpacing: 2.0,
-                              fontWeight: FontWeight.normal),
+                        child: Row(
+                          children: <Widget>[
+                            Icon(Icons.menu,color: Colors.white,),
+                            SizedBox(width: 15,),
+                            Text(
+                            '카테고리별 카페 찾기',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 23.0,
+                                letterSpacing: 5.0,
+                                fontWeight: FontWeight.normal),
+                          ),]
                         ),
                       ),
                     ),
                     SizedBox(height: 30),
                     Container(
-                      width: MediaQuery.of(context).size.width * 0.8,
+                      width: MediaQuery.of(context).size.width * 0.9,
                       height: MediaQuery.of(context).size.height * 0.09,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                            primary: Colors.pink[100], onPrimary: Colors.black),
+                            shape: new RoundedRectangleBorder(
+                              borderRadius: new BorderRadius.circular(25.0),
+                            ),
+                            primary: Color(0xFF2C2E43),
+                            onPrimary: Colors.black),
                         onPressed: () {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
                                   builder: (context) => favoritesPage()));
                         },
-                        child: Text(
-                          '즐겨찾는 카페 찾기',
-                          style: TextStyle(
-                              fontSize: 30.0,
-                              letterSpacing: 2.0,
-                              fontWeight: FontWeight.normal),
+                        child: Row(
+                          children: <Widget>[
+                            Icon(Icons.favorite_border,color: Colors.white,),
+                            SizedBox(width: 15,),
+                            Text(
+                            '즐겨찾는 카페 찾기',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 23.0,
+                                letterSpacing: 5.0,
+                                fontWeight: FontWeight.normal),
+                          ),]
                         ),
                       ),
                     ),
