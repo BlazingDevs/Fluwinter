@@ -13,7 +13,7 @@ class _detailPageState extends State<detailPage> {
     return AppBar(
       elevation: 0,
       leading: IconButton(
-        icon: const Icon(Icons.arrow_back_ios),
+        icon: const Icon(Icons.arrow_back),
         onPressed: () {
           Navigator.pop(context);
         },
@@ -21,7 +21,10 @@ class _detailPageState extends State<detailPage> {
       backgroundColor: Colors.transparent,
       actions: [
         IconButton(
-          icon: const Icon(Icons.bookmark_outline),
+          icon: Image.asset(
+            'assets/heart_border.png',
+            color: Colors.red[500],
+          ),
           onPressed: () {
             print('book mark button is pressed');
           },
