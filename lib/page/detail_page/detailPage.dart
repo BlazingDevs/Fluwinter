@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:cafegation/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -56,12 +54,13 @@ class _detailPageState extends State<detailPage> {
   Widget _bodyWidget() {
     var size = MediaQuery.of(context).size;
 
-    CollectionReference _collectionReference =
-        FirebaseFirestore.instance.collection('cafes');
+    DocumentReference _documentReference = FirebaseFirestore.instance
+        .collection('cafes')
+        .doc('ke2dkmpMTwTWcfdZPj0h');
 
-    return StreamBuilder<QuerySnapshot>(
-      stream: _collectionReference.snapshots(),
-      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+    return StreamBuilder(
+      stream: _documentReference.snapshots(),
+      builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
         if (snapshot.hasError) {
           return Text('Something went wrong');
         }
@@ -70,9 +69,9 @@ class _detailPageState extends State<detailPage> {
           return Text("Loading");
         }
 
-        _images = snapshot.data!.docs[0]['images'][0];
-        _name = snapshot.data!.docs[0]['name'];
-        _location = snapshot.data!.docs[0]['location'];
+        _images = snapshot.data!['images'][0];
+        _name = snapshot.data!['name'];
+        _location = snapshot.data!['location'];
 
         return SingleChildScrollView(
           child: Stack(
