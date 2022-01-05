@@ -9,6 +9,8 @@ class detailPage extends StatefulWidget {
 }
 
 class _detailPageState extends State<detailPage> {
+  bool _favoriteButtonPressed = false;
+
   PreferredSizeWidget _appBarWidget() {
     return AppBar(
       elevation: 0,
@@ -22,11 +24,16 @@ class _detailPageState extends State<detailPage> {
       actions: [
         IconButton(
           icon: Image.asset(
-            'assets/heart_border.png',
+            _favoriteButtonPressed
+                ? 'assets/heart.png'
+                : 'assets/heart_border.png',
             color: Colors.red[500],
           ),
           onPressed: () {
-            print('book mark button is pressed');
+            setState(() {
+              _favoriteButtonPressed = !_favoriteButtonPressed;
+            });
+            ;
           },
         ),
         IconButton(
