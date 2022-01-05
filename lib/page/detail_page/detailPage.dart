@@ -70,6 +70,7 @@ class _detailPageState extends State<detailPage> {
           return Text("Loading");
         }
 
+        _images = snapshot.data!.docs[0]['images'][0];
         _name = snapshot.data!.docs[0]['name'];
         _location = snapshot.data!.docs[0]['location'];
 
@@ -80,10 +81,9 @@ class _detailPageState extends State<detailPage> {
               Container(
                 width: double.infinity,
                 height: size.height * 0.5,
-                decoration: const BoxDecoration(
+                decoration: BoxDecoration(
                   image: DecorationImage(
-                      image: AssetImage("assets/sample_image.jpg"),
-                      fit: BoxFit.cover),
+                      image: NetworkImage(_images), fit: BoxFit.cover),
                 ),
               ),
               Container(
