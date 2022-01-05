@@ -114,8 +114,6 @@ class _detailPageState extends State<detailPage> {
                         _location,
                         style: const TextStyle(
                           fontSize: 11,
-                          height: 1.5,
-                          fontWeight: FontWeight.bold,
                         ),
                       ),
                       const SizedBox(
