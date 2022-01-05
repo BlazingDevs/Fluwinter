@@ -1,5 +1,8 @@
+import 'dart:html';
+
 import 'package:cafegation/constants/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class detailPage extends StatefulWidget {
   const detailPage({Key? key}) : super(key: key);
@@ -10,6 +13,10 @@ class detailPage extends StatefulWidget {
 
 class _detailPageState extends State<detailPage> {
   bool _favoriteButtonPressed = false;
+
+  String _images = "대표 사진";
+  String _name = "카페 이름";
+  String _location = "장소";
 
   PreferredSizeWidget _appBarWidget() {
     return AppBar(
@@ -49,158 +56,190 @@ class _detailPageState extends State<detailPage> {
   Widget _bodyWidget() {
     var size = MediaQuery.of(context).size;
 
-    return SingleChildScrollView(
-      child: Stack(
-        children: <Widget>[
-          // 가게 대표 사진
-          Container(
-            width: double.infinity,
-            height: size.height * 0.5,
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage("assets/sample_image.jpg"),
-                  fit: BoxFit.cover),
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.only(top: size.height * 0.45),
-            width: double.infinity,
-            decoration: BoxDecoration(
-                color: Colors.white, borderRadius: BorderRadius.circular(30)),
-            child: Padding(
-              padding: const EdgeInsets.all(20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // 가게 이름
-                  const Text(
-                    'CafeNamu',
-                    style: TextStyle(
-                      fontSize: 30,
-                      height: 1.5,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 7,
-                  ),
-                  // 태그
-                  Row(
+    CollectionReference _collectionReference =
+        FirebaseFirestore.instance.collection('cafes');
+
+    return StreamBuilder<QuerySnapshot>(
+      stream: _collectionReference.snapshots(),
+      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+        if (snapshot.hasError) {
+          return Text('Something went wrong');
+        }
+
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Text("Loading");
+        }
+
+        _name = snapshot.data!.docs[0]['name'];
+        _location = snapshot.data!.docs[0]['location'];
+
+        return SingleChildScrollView(
+          child: Stack(
+            children: <Widget>[
+              // 가게 대표 사진
+              Container(
+                width: double.infinity,
+                height: size.height * 0.5,
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage("assets/sample_image.jpg"),
+                      fit: BoxFit.cover),
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.only(top: size.height * 0.45),
+                width: double.infinity,
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(30)),
+                child: Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      // 카페 이름
+                      Text(
+                        _name,
+                        style: const TextStyle(
+                          fontSize: 30,
+                          height: 1.5,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      // 카페 위치
+                      Text(
+                        _location,
+                        style: const TextStyle(
+                          fontSize: 11,
+                          height: 1.5,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 9,
+                      ),
+                      // 태그
+                      Row(
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(30),
+                                color: kGreyColor),
+                            child: const Padding(
+                              padding: EdgeInsets.all(7.0),
+                              child: Text(
+                                '조용한',
+                                style: TextStyle(fontSize: 11),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Container(
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(30),
+                                color: kGreyColor),
+                            child: const Padding(
+                              padding: EdgeInsets.all(7.0),
+                              child: Text(
+                                '분위기 있는',
+                                style: TextStyle(fontSize: 11),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Container(
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(30),
+                                color: kGreyColor),
+                            child: const Padding(
+                              padding: EdgeInsets.all(7.0),
+                              child: Text(
+                                '커피가 맛있는',
+                                style: TextStyle(fontSize: 11),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      const Text(
+                        'MENU',
+                        style: TextStyle(
+                          height: 1.6,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      // 메뉴판
                       Container(
+                        width: double.infinity,
                         decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(30),
-                            color: kGreyColor),
+                          border: Border.all(
+                            color: kGreyColor,
+                            width: 2,
+                          ),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
                         child: const Padding(
                           padding: EdgeInsets.all(7.0),
                           child: Text(
-                            '조용한',
-                            style: TextStyle(fontSize: 11),
+                            '- 아메리카노\n- 카페 라떼\n- 바닐라 라뗴\n- 핫초코',
+                            style: TextStyle(fontSize: 13),
                           ),
                         ),
                       ),
                       const SizedBox(
-                        width: 10,
+                        height: 10.0,
                       ),
-                      Container(
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(30),
-                            color: kGreyColor),
-                        child: const Padding(
-                          padding: EdgeInsets.all(7.0),
-                          child: Text(
-                            '분위기 있는',
-                            style: TextStyle(fontSize: 11),
-                          ),
+                      const Text(
+                        'REVIEW',
+                        style: TextStyle(
+                          height: 1.6,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                       const SizedBox(
-                        width: 10,
+                        height: 5,
                       ),
+                      // 리뷰
                       Container(
+                        width: double.infinity,
                         decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(30),
-                            color: kGreyColor),
+                          border: Border.all(
+                            color: kGreyColor,
+                            width: 2,
+                          ),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
                         child: const Padding(
                           padding: EdgeInsets.all(7.0),
                           child: Text(
-                            '커피가 맛있는',
-                            style: TextStyle(fontSize: 11),
+                            '- 여기 불친절해요\n- 커피 맛집',
+                            style: TextStyle(fontSize: 13),
                           ),
                         ),
                       ),
                     ],
                   ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  const Text(
-                    'MENU',
-                    style: TextStyle(
-                      height: 1.6,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  // 메뉴판
-                  Container(
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: kGreyColor,
-                        width: 2,
-                      ),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: const Padding(
-                      padding: EdgeInsets.all(7.0),
-                      child: Text(
-                        '- 아메리카노\n- 카페 라떼\n- 바닐라 라뗴\n- 핫초코',
-                        style: TextStyle(fontSize: 13),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 10.0,
-                  ),
-                  const Text(
-                    'REVIEW',
-                    style: TextStyle(
-                      height: 1.6,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  // 리뷰
-                  Container(
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: kGreyColor,
-                        width: 2,
-                      ),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: const Padding(
-                      padding: EdgeInsets.all(7.0),
-                      child: Text(
-                        '- 여기 불친절해요\n- 커피 맛집',
-                        style: TextStyle(fontSize: 13),
-                      ),
-                    ),
-                  ),
-                ],
+                ),
               ),
-            ),
+            ],
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 
