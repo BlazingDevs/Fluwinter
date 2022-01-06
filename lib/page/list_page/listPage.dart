@@ -14,7 +14,7 @@ class _listPageState extends State<listPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: kMainColor,
+        backgroundColor: Color(0xFFF7B938),
         shadowColor: kGreyColor,
         title: Text('list Page'),
       ),
