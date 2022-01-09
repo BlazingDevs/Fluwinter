@@ -23,6 +23,14 @@ class DataBaseService {
     });
   }
 
+  List<String>? NullableList(QueryDocumentSnapshot<Object?> doc, String name){
+    try{
+      return List.from( doc[name] );
+    } catch(e){
+      return const[];
+    }
+  }
+
   List<Cafe> _cafeListFromSnapShot(QuerySnapshot querySnapshot){
     return querySnapshot.docs.map((doc){
       return Cafe(
@@ -30,7 +38,10 @@ class DataBaseService {
         telephone: doc['telephone'],
         location: doc['location'],
         rating: doc['rating'],
-        images: List.from( doc['images'] )
+        images: NullableList(doc, 'images'),
+        reviews: NullableList(doc, 'reviews'),
+        menus: NullableList(doc, 'menus'),
+        tags: NullableList(doc, 'tags'),
       );
     }).toList();
   }

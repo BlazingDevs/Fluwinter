@@ -25,7 +25,7 @@ class _FavoriteCafeListState extends State<FavoriteCafeList> {
           child: ListView.builder(
             itemCount: cafes.length,
             itemBuilder: (context, index){
-              return FavoriteCafeItem(cafe: cafes[index]);
+              return FavoriteCafeItem(cafe: cafes[index], index: index, hideFavorite: true,);
             },
           ),
         )
