@@ -18,8 +18,8 @@ class _searchPageState extends State<searchPage> {
     return Scaffold(
       resizeToAvoidBottomInset: false,   
       appBar: AppBar(
-        backgroundColor: Colors.amber,
-        shadowColor: Colors.orange,
+        backgroundColor: Colors.blue[200],
+        shadowColor: Colors.blue[300],
         title: Text('Search Page'),
       ),
       body: SafeArea(

@@ -14,8 +14,8 @@ class _tagPageState extends State<tagPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.amber,
-        shadowColor: Colors.orange,
+        backgroundColor: Colors.blue[200],
+        shadowColor: Colors.blue[300],
         title: Text('Tag Page'),
       ),
       body: Center(

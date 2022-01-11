@@ -5,18 +5,21 @@ import 'package:transparent_image/transparent_image.dart';
 
 class FavoriteCafeItem extends StatelessWidget {
   final Cafe cafe;
+  final int index;
+  final bool hideFavorite;
 
-  const FavoriteCafeItem({ required this.cafe, Key? key }) : super(key: key);
+  const FavoriteCafeItem({ required this.cafe, required this.index, required this.hideFavorite, Key? key }) : super(key: key);
 
+  //TODO : There is actually no 'favorite' function here, which is a problem.
   @override
   Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.center,
-      color: Colors.grey[200],
+      color: Colors.grey[200 + index % 4 * 100],
       height: 100,
       child: Row(
         children: <Widget>[
-          SizedBox(
+          hideFavorite ? Container() : SizedBox(
             width: 60,
             child: ImageIcon(
               const AssetImage('assets/heart.png'),
@@ -27,7 +30,7 @@ class FavoriteCafeItem extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             child: FadeInImage.memoryNetwork(
               placeholder: kTransparentImage, 
-              image: cafe.images[0]
+              image: cafe.images?[0] ?? ""
             )
           ),
           Padding(
@@ -49,7 +52,7 @@ class FavoriteCafeItem extends StatelessWidget {
                 Row(children: [
                   Text('${cafe.rating}'),
                   RatingBarIndicator(
-                    rating: cafe.rating,
+                    rating: cafe.rating.toDouble(),
                     direction: Axis.horizontal,
                     itemCount: 5,
                     itemSize: 20.0,
