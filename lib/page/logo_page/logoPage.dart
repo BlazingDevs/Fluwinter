@@ -1,8 +1,12 @@
 import 'package:cafegation/constants/colors.dart';
+import 'package:cafegation/page/login_page/welcome_page.dart';
 import 'package:cafegation/page/search_page/searchPage.dart';
 import 'package:flutter/material.dart';
 
 class logoPage extends StatefulWidget {
+
+  static String id = 'logopage';
+  
   @override
   _logoPageState createState() => _logoPageState();
 }
@@ -17,7 +21,7 @@ class _logoPageState extends State<logoPage> {
   _navigatetohome() async {
     await Future.delayed(Duration(milliseconds: 2000), () {});
     Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => searchPage()));
+        context, MaterialPageRoute(builder: (context) => WelcomePage()));
   }
 
   @override
@@ -36,13 +40,28 @@ class _logoPageState extends State<logoPage> {
                 Text(
                   'Cafegation',
                   style: TextStyle(
-                      fontFamily: 'Signika', fontSize: 30.0, color: Colors.black,letterSpacing: 2.5,),
+                    fontFamily: 'Signika',
+                    fontSize: 30.0,
+                    color: Colors.black,
+                    letterSpacing: 2.5,
+                  ),
                 ),
-                SizedBox(height: 20.0,width: 200.0,child: Divider(color: Colors.black,),),
+                SizedBox(
+                  height: 20.0,
+                  width: 200.0,
+                  child: Divider(
+                    color: Colors.black,
+                  ),
+                ),
                 Text(
                   'cafe navigation',
                   style: TextStyle(
-                      fontFamily: 'SourceSans', fontSize: 20.0, color: Colors.black,fontWeight: FontWeight.normal,letterSpacing: 5.0,),
+                    fontFamily: 'SourceSans',
+                    fontSize: 20.0,
+                    color: Colors.black,
+                    fontWeight: FontWeight.normal,
+                    letterSpacing: 5.0,
+                  ),
                 ),
               ],
             ),
