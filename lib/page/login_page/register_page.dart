@@ -50,7 +50,10 @@ class _registerPageState extends State<registerPage> {
               onChanged: (value) {
                 //Do something with the user input.
               },
-              decoration: InputDecoration(
+              obscureText: true,
+              enableSuggestions: false,
+              autocorrect: false,
+              decoration: const InputDecoration(
                 hintText: 'Enter your password',
                 contentPadding:
                     EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
