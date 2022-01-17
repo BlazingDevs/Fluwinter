@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cafegation/models/cafe.dart';
+import 'package:cafegation/models/myuser.dart';
 
 class DataBaseService {
   
@@ -11,8 +12,16 @@ class DataBaseService {
 
   //카페 콜렉션
   final CollectionReference cafeCollection = FirebaseFirestore.instance.collection('cafes');
+  final CollectionReference userDataCollection = FirebaseFirestore.instance.collection('user_data');
 
   //카페 정보를 업데이트함. (create는 필요 없음. 없으면 firebase에서 만듦.)
+  Future updateUserData(String uid, List<String>favorite) async {
+    if(uid.isEmpty) throw NullThrownError();
+    return await cafeCollection.doc(uid).set({
+      'favorite': favorite
+    });
+  }
+
   Future updateCafeData(String uid, String name, String telephone, String location, double rating) async {
     if(uid.isEmpty) throw NullThrownError();
     return await cafeCollection.doc(uid).set({
@@ -23,7 +32,7 @@ class DataBaseService {
     });
   }
 
-  List<String>? NullableList(QueryDocumentSnapshot<Object?> doc, String name){
+  List<String> nonNullableList(QueryDocumentSnapshot<Object?> doc, String name){
     try{
       return List.from( doc[name] );
     } catch(e){
@@ -38,10 +47,10 @@ class DataBaseService {
         telephone: doc['telephone'],
         location: doc['location'],
         rating: doc['rating'],
-        images: NullableList(doc, 'images'),
-        reviews: NullableList(doc, 'reviews'),
-        menus: NullableList(doc, 'menus'),
-        tags: NullableList(doc, 'tags'),
+        images: nonNullableList(doc, 'images'),
+        reviews: nonNullableList(doc, 'reviews'),
+        menus: nonNullableList(doc, 'menus'),
+        tags: nonNullableList(doc, 'tags'),
       );
     }).toList();
   }
@@ -52,4 +61,9 @@ class DataBaseService {
       .map(_cafeListFromSnapShot);
   }
 
+  Future<List<String>> userFavorite(String uid) async{
+    DocumentSnapshot docSnapshot = await userDataCollection.doc(uid).get();
+    Map<String, dynamic>? data = docSnapshot.data() as Map<String, dynamic>?;
+    return List.from( data?['favorites'] );
+  }
 }
