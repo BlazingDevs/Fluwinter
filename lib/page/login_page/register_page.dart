@@ -1,6 +1,8 @@
+import 'package:cafegation/page/login_page/welcome_page.dart';
+import 'package:cafegation/page/search_page/searchPage.dart';
+import 'package:cafegation/services/auth.dart';
 import 'package:flutter/material.dart';
 class registerPage extends StatefulWidget {
-  
   static String id = 'registerpage';
 
   @override
@@ -9,6 +11,7 @@ class registerPage extends StatefulWidget {
 
 class _registerPageState extends State<registerPage> {
 
+  final AuthService _auth = AuthService();
   bool showSpinner = false;
   String email = '';
   String password = '';
@@ -27,7 +30,7 @@ class _registerPageState extends State<registerPage> {
               height: 100.0,
               child: Image.asset('assets/coffee1.png'),
             ),
-            SizedBox(
+            const SizedBox(
               height: 48.0,
             ),
             TextField(
@@ -36,7 +39,7 @@ class _registerPageState extends State<registerPage> {
               onChanged: (value) {
                 email = value;
               },
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 hintText: 'Enter your Email',
                 contentPadding:
                     EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
@@ -53,7 +56,7 @@ class _registerPageState extends State<registerPage> {
                 ),
               ),
             ),
-             SizedBox(
+            const SizedBox(
               height: 8.0,
             ),
             TextField(
@@ -62,7 +65,6 @@ class _registerPageState extends State<registerPage> {
               onChanged: (value) {
                 password = value;
               },
-              obscureText: true,
               enableSuggestions: false,
               autocorrect: false,
               decoration: const InputDecoration(
@@ -82,7 +84,7 @@ class _registerPageState extends State<registerPage> {
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 24.0,
             ),
             Padding(
@@ -96,11 +98,37 @@ class _registerPageState extends State<registerPage> {
                     setState(() {
                       showSpinner = true;
                     });
+                    _auth.registerWithEmailAndPassword(email, password).then((registerResult){
+                      if(registerResult){
+                        Navigator.pushNamed(context, searchPage.id);
+                      } else {
+                        print('Something went wrong while resigtering.');
+                      }
+                    });
                   },
                   minWidth: 200.0,
                   height: 42.0,
-                  child: Text(
+                  child: const Text(
                     'Register',
+                    style: TextStyle(color: Colors.white,fontSize: 15.0),
+                  ),
+                ),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 16.0),
+              child: Material(
+                color: Colors.brown[300],
+                borderRadius: BorderRadius.all(Radius.circular(30.0)),
+                elevation: 5.0,
+                child: MaterialButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, WelcomePage.id);
+                  },
+                  minWidth: 200.0,
+                  height: 42.0,
+                  child: const Text(
+                    'Go Back',
                     style: TextStyle(color: Colors.white,fontSize: 15.0),
                   ),
                 ),

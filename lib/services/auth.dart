@@ -12,7 +12,7 @@ class AuthService{
   //Stream for FirbaseUser
 
   //Register With Email & Password
-  Future registerWithEmailAndPassword (String email, String pass) async {
+  Future<bool> registerWithEmailAndPassword (String email, String pass) async {
     try {
       UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
         email: email,
@@ -25,13 +25,16 @@ class AuthService{
       } else if (e.code == 'email-already-in-use') {
         print('The account already exists for that email.');
       }
+      return false;
     } catch (e) {
       print(e);
+      return false;
     }
+    return true;
   }
 
   //Sign In With Email & Password
-  Future signInWithEmailAndPassword (String email, String pass) async {
+  Future<bool> signInWithEmailAndPassword (String email, String pass) async {
     try {
       UserCredential userCredential = await _auth.signInWithEmailAndPassword(
         email: email,
@@ -44,11 +47,13 @@ class AuthService{
       } else if (e.code == 'wrong-password') {
         print('Wrong password provided for that user.');
       }
+      return false;
     }
+  return true;
   }
 
   //Sign In Anonymously
-  Future signInAnon () async {
+  Future<bool> signInAnon () async {
     try {
       UserCredential userCredential = await _auth.signInAnonymously();
       MyUser user = _userFromFirebaseUser(userCredential.user);
@@ -58,7 +63,9 @@ class AuthService{
       } else if (e.code == 'wrong-password') {
         print('Wrong password provided for that user.');
       }
+      return false;
     }
+    return true;
   }
 
   //Sign Out

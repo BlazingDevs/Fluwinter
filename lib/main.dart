@@ -4,6 +4,7 @@ import 'package:cafegation/page/login_page/loginpage.dart';
 import 'package:cafegation/page/login_page/register_page.dart';
 import 'package:cafegation/page/login_page/welcome_page.dart';
 import 'package:cafegation/page/logo_page/logoPage.dart';
+import 'package:cafegation/page/search_page/searchPage.dart';
 import 'package:cafegation/services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -59,10 +60,11 @@ class MyApp extends StatelessWidget {
         ),
         initialRoute: WelcomePage.id,
         routes: {
-          WelcomePage.id : (context) => WelcomePage(),
-          loginPage.id: (context) => loginPage(),
-          registerPage.id: (context) => registerPage(),
-          logoPage.id: (context) => logoPage()
+          WelcomePage.id : (context) => WelcomePage(), //웰컴
+          loginPage.id: (context) => loginPage(), //로그인
+          registerPage.id: (context) => registerPage(), //회원가입
+          logoPage.id: (context) => logoPage(), //로고
+          searchPage.id: (context) => searchPage() //찾기 화면...
         },
       ),
     );

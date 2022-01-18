@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cafegation/models/cafe.dart';
-import 'package:cafegation/models/myuser.dart';
 
 class DataBaseService {
   
