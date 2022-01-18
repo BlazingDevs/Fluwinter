@@ -1,3 +1,5 @@
+import 'package:cafegation/page/search_page/searchPage.dart';
+import 'package:cafegation/page/tag_page/tagPage.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
@@ -27,6 +29,8 @@ class _loginPageState extends State<loginPage> {
               height: 48.0,
             ),
             TextField(
+              keyboardType: TextInputType.emailAddress,
+              textAlign: TextAlign.center,
               onChanged: (value) {},
               decoration: InputDecoration(
                 hintText: 'Enter your Email',
@@ -49,6 +53,8 @@ class _loginPageState extends State<loginPage> {
               height: 8.0,
             ),
             TextField(
+              obscureText: true,
+              textAlign: TextAlign.center,
               onChanged: (value) {
                 
                 //Do something with the user input.
@@ -84,7 +90,12 @@ class _loginPageState extends State<loginPage> {
                 elevation: 5.0,
                 child: MaterialButton(
                   onPressed: () {
-                    //Implement registration functionality.
+                    Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => searchPage()));
+                      
+                    //일단 임시적으로 로그인 누르면 searchPage 이동하게끔 만듬.
                   },
                   minWidth: 200.0,
                   height: 42.0,

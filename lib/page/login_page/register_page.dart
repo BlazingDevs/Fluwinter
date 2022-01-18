@@ -2,11 +2,17 @@ import 'package:flutter/material.dart';
 class registerPage extends StatefulWidget {
   
   static String id = 'registerpage';
+
   @override
   _registerPageState createState() => _registerPageState();
 }
 
 class _registerPageState extends State<registerPage> {
+
+  bool showSpinner = false;
+  String email = '';
+  String password = '';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,7 +31,11 @@ class _registerPageState extends State<registerPage> {
               height: 48.0,
             ),
             TextField(
-              onChanged: (value) {},
+              keyboardType: TextInputType.emailAddress,
+              textAlign: TextAlign.center,
+              onChanged: (value) {
+                email = value;
+              },
               decoration: InputDecoration(
                 hintText: 'Enter your Email',
                 contentPadding:
@@ -47,8 +57,10 @@ class _registerPageState extends State<registerPage> {
               height: 8.0,
             ),
             TextField(
+              obscureText: true,
+              textAlign: TextAlign.center,
               onChanged: (value) {
-                //Do something with the user input.
+                password = value;
               },
               obscureText: true,
               enableSuggestions: false,
@@ -81,7 +93,9 @@ class _registerPageState extends State<registerPage> {
                 elevation: 5.0,
                 child: MaterialButton(
                   onPressed: () {
-                    //Implement registration functionality.
+                    setState(() {
+                      showSpinner = true;
+                    });
                   },
                   minWidth: 200.0,
                   height: 42.0,
