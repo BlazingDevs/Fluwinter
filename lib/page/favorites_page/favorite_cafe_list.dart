@@ -18,7 +18,7 @@ class _FavoriteCafeListState extends State<FavoriteCafeList> {
     return Column(
       children: [
         Container(
-          margin: EdgeInsets.all(15.0),
+          margin: const EdgeInsets.all(15.0),
           child: Text('총 ${cafes.length}개'),
         ),
         Flexible(

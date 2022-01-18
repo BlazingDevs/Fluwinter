@@ -19,7 +19,7 @@ class _FavoritesPageState extends State<favoritesPage> {
   @override
   Widget build(BuildContext context) {
     return StreamProvider<List<Cafe>>.value(
-      initialData: [],
+      initialData: const [],
       value: DataBaseService().cafes,
       child: Scaffold(
         appBar: AppBar(

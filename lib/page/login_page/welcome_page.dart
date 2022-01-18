@@ -1,9 +1,9 @@
 import 'package:cafegation/page/login_page/loginpage.dart';
 import 'package:cafegation/page/login_page/register_page.dart';
+import 'package:cafegation/page/search_page/searchPage.dart';
 import 'package:flutter/material.dart';
 
 class WelcomePage extends StatefulWidget {
-
   static String id = 'welcomepage';
 
   @override
@@ -48,7 +48,7 @@ class _WelcomePageState extends State<WelcomePage> {
                   },
                   minWidth: 300.0,
                   height: 43.0,
-                  child: Text('Lon In',style: TextStyle(color: Colors.white),),
+                  child: Text('Log In',style: TextStyle(color: Colors.white),),
                 ),
                 ),
               ),
@@ -65,7 +65,22 @@ class _WelcomePageState extends State<WelcomePage> {
                   minWidth: 300.0,
                   height: 43.0,
                   child: Text('Register',style: TextStyle(color: Colors.white),),
+                  ),
                 ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                child: Material(elevation: 15.0,
+                color: Colors.brown[300],
+                borderRadius: BorderRadius.circular(50.0),
+                child: MaterialButton(
+                  onPressed: (){
+                    Navigator.pushNamed(context, searchPage.id);
+                  },
+                  minWidth: 300.0,
+                  height: 43.0,
+                  child: Text('Continue Without LogIn(Debug)',style: TextStyle(color: Colors.white),),
+                  ),
                 ),
               )
             ],

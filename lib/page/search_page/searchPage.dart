@@ -6,6 +6,7 @@ import 'package:cafegation/page/tag_page/tagPage.dart';
 import 'package:flutter/material.dart';
 
 class searchPage extends StatefulWidget {
+  static String id = 'searchpage';
   const searchPage({Key? key}) : super(key: key);
 
   @override
