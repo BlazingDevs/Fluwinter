@@ -18,6 +18,7 @@ class _detailPageState extends State<detailPage> {
   String _images = "대표 사진";
   String _name = "카페 이름";
   String _location = "장소";
+  List<dynamic> _tags = ['태그1', '태그2', '태그3'];
 
   PreferredSizeWidget _appBarWidget() {
     DocumentReference _documentReference =
@@ -61,6 +62,20 @@ class _detailPageState extends State<detailPage> {
     );
   }
 
+  Widget _tagWidget(String tagName) {
+    return Container(
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(30), color: kGreyColor),
+      child: Padding(
+        padding: const EdgeInsets.all(7.0),
+        child: Text(
+          tagName,
+          style: const TextStyle(fontSize: 11),
+        ),
+      ),
+    );
+  }
+
   Widget _bodyWidget() {
     var size = MediaQuery.of(context).size;
 
@@ -81,6 +96,7 @@ class _detailPageState extends State<detailPage> {
         _images = snapshot.data!['images'][0];
         _name = snapshot.data!['name'];
         _location = snapshot.data!['location'];
+        _tags = snapshot.data!['tags'];
 
         return SingleChildScrollView(
           child: Stack(
@@ -130,48 +146,15 @@ class _detailPageState extends State<detailPage> {
                       // 태그
                       Row(
                         children: [
-                          Container(
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(30),
-                                color: kGreyColor),
-                            child: const Padding(
-                              padding: EdgeInsets.all(7.0),
-                              child: Text(
-                                '조용한',
-                                style: TextStyle(fontSize: 11),
-                              ),
-                            ),
-                          ),
+                          _tagWidget(_tags[0]),
                           const SizedBox(
                             width: 10,
                           ),
-                          Container(
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(30),
-                                color: kGreyColor),
-                            child: const Padding(
-                              padding: EdgeInsets.all(7.0),
-                              child: Text(
-                                '분위기 있는',
-                                style: TextStyle(fontSize: 11),
-                              ),
-                            ),
-                          ),
+                          _tagWidget(_tags[1]),
                           const SizedBox(
                             width: 10,
                           ),
-                          Container(
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(30),
-                                color: kGreyColor),
-                            child: const Padding(
-                              padding: EdgeInsets.all(7.0),
-                              child: Text(
-                                '커피가 맛있는',
-                                style: TextStyle(fontSize: 11),
-                              ),
-                            ),
-                          ),
+                          _tagWidget(_tags[2]),
                         ],
                       ),
                       const SizedBox(
