@@ -12,18 +12,35 @@ class listPage extends StatefulWidget {
 }
 
 class _listPageState extends State<listPage> {
+  bool favorite_pressed = true;
   List<Widget> makeListWidget(AsyncSnapshot snapshot) {
     return snapshot.data.docs.map<Widget>((document) {
       return ListTile(
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => detailPage()),
-          );
-        },
-        title: Text(document["name"]),
-        subtitle: Text(document["location"]),
-      );
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => detailPage()),
+            );
+          },
+          leading: ClipRRect(
+            borderRadius: BorderRadius.all(Radius.circular(10.0)),
+            child: Image(
+              image: NetworkImage(document["images"][0]),
+            ),
+          ),
+          title: Text(document["name"]),
+          subtitle: Text(document["location"]),
+          trailing: IconButton(
+            icon:
+                Icon(favorite_pressed ? Icons.favorite : Icons.favorite_border),
+            color: Colors.red,
+            iconSize: 25.0,
+            onPressed: () {
+              setState(() {
+                favorite_pressed = !favorite_pressed;
+              });
+            },
+          ));
     }).toList();
   }
 
