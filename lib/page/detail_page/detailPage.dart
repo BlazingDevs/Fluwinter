@@ -47,7 +47,7 @@ class _detailPageState extends State<detailPage> {
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => locationPage()),
+              MaterialPageRoute(builder: (context) => const locationPage()),
             );
           },
         ),
@@ -251,6 +251,4 @@ class _detailPageState extends State<detailPage> {
         appBar: _appBarWidget(),
         body: _bodyWidget());
   }
-
-  locationPage() {}
 }
