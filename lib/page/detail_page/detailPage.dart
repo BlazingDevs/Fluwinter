@@ -18,6 +18,10 @@ class _detailPageState extends State<detailPage> {
   String _location = "장소";
 
   PreferredSizeWidget _appBarWidget() {
+    DocumentReference _documentReference = FirebaseFirestore.instance
+        .collection('cafes')
+        .doc('ke2dkmpMTwTWcfdZPj0h');
+
     return AppBar(
       elevation: 0,
       leading: IconButton(
@@ -38,6 +42,7 @@ class _detailPageState extends State<detailPage> {
           onPressed: () {
             setState(() {
               _favoriteButtonPressed = !_favoriteButtonPressed;
+              _documentReference.update({'favorite': _favoriteButtonPressed});
             });
             ;
           },
