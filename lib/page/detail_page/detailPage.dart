@@ -1,4 +1,5 @@
 import 'package:cafegation/constants/colors.dart';
+import 'package:cafegation/page/location_page/locationPage.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -44,7 +45,10 @@ class _detailPageState extends State<detailPage> {
         IconButton(
           icon: const Icon(Icons.location_pin),
           onPressed: () {
-            print('location_pin button is pressed');
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => locationPage()),
+            );
           },
         ),
       ],
@@ -247,4 +251,6 @@ class _detailPageState extends State<detailPage> {
         appBar: _appBarWidget(),
         body: _bodyWidget());
   }
+
+  locationPage() {}
 }
