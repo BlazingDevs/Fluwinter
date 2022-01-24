@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class detailPage extends StatefulWidget {
-  const detailPage({Key? key}) : super(key: key);
+  const detailPage({Key? key, required this.cafeName}) : super(key: key);
+
+  final String cafeName;
 
   @override
   _detailPageState createState() => _detailPageState();
@@ -18,9 +20,8 @@ class _detailPageState extends State<detailPage> {
   String _location = "장소";
 
   PreferredSizeWidget _appBarWidget() {
-    DocumentReference _documentReference = FirebaseFirestore.instance
-        .collection('cafes')
-        .doc('ke2dkmpMTwTWcfdZPj0h');
+    DocumentReference _documentReference =
+        FirebaseFirestore.instance.collection('cafes').doc(widget.cafeName);
 
     return AppBar(
       elevation: 0,
@@ -63,9 +64,8 @@ class _detailPageState extends State<detailPage> {
   Widget _bodyWidget() {
     var size = MediaQuery.of(context).size;
 
-    DocumentReference _documentReference = FirebaseFirestore.instance
-        .collection('cafes')
-        .doc('ke2dkmpMTwTWcfdZPj0h');
+    DocumentReference _documentReference =
+        FirebaseFirestore.instance.collection('cafes').doc(widget.cafeName);
 
     return StreamBuilder(
       stream: _documentReference.snapshots(),
