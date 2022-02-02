@@ -99,7 +99,7 @@ class _registerPageState extends State<registerPage> {
                       showSpinner = true;
                     });
                     _auth.registerWithEmailAndPassword(email, password).then((registerResult){
-                      if(registerResult == null){
+                      if(registerResult != null){
                         Navigator.pushNamed(context, searchPage.id);
                       } else {
                         print('Something went wrong while resigtering.');

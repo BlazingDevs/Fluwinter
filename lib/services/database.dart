@@ -3,12 +3,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cafegation/models/cafe.dart';
 
 class DataBaseService {
-  
   //쓰기를 할때 firebase가 발급한 UID를 이용하도록 함.
-  String uid = '';
+  static final DataBaseService instance = DataBaseService._internal();
 
-  DataBaseService();
-  DataBaseService.withUID({ required this.uid });
+  factory DataBaseService() {
+    return instance;
+  }
+  DataBaseService._internal();
 
   //카페 콜렉션
   final CollectionReference cafeCollection = FirebaseFirestore.instance.collection('cafes');
@@ -60,6 +61,8 @@ class DataBaseService {
   }
 
   Future<List<Cafe>> favoriteCafes (MyUser user) async {
+    if(user.favorite == null)
+      return [];
     List<Cafe> favoriteCafes = [];
     for(String cafe_id in user.favorite!){
       var document = await cafeCollection.doc(cafe_id).get();
