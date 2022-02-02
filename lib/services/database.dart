@@ -79,7 +79,7 @@ class DataBaseService {
 
   Future<List<String>> userFavorite(String uid) async{
     DocumentSnapshot docSnapshot = await userDataCollection.doc(uid).get();
-    Map<String, dynamic>? data = docSnapshot.data() as Map<String, dynamic>?;
-    return List.from( data?['favorites'] );
+    //Map<String, dynamic>? data = docSnapshot.data() as Map<String, dynamic>?;
+    return List.from( docSnapshot['favorites'] );
   }
 }
