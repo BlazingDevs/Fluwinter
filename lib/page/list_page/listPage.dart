@@ -19,7 +19,10 @@ class _listPageState extends State<listPage> {
           onTap: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => detailPage()),
+              MaterialPageRoute(
+                  builder: (context) => detailPage(
+                        cafeName: document["name"],
+                      )),
             );
           },
           leading: ClipRRect(
