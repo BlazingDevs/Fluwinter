@@ -1,3 +1,4 @@
+import 'package:cafegation/models/myuser.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cafegation/models/cafe.dart';
 
@@ -31,7 +32,7 @@ class DataBaseService {
     });
   }
 
-  List<String> nonNullableList(QueryDocumentSnapshot<Object?> doc, String name){
+  List<String> nonNullableList(DocumentSnapshot doc, String name){
     try{
       return List.from( doc[name] );
     } catch(e){
@@ -39,19 +40,32 @@ class DataBaseService {
     }
   }
 
+  Cafe cafeBuilder(DocumentSnapshot doc){
+    return Cafe(
+      name: doc['name'],
+      telephone: doc['telephone'],
+      location: doc['location'],
+      rating: doc['rating'],
+      images: nonNullableList(doc, 'images'),
+      reviews: nonNullableList(doc, 'reviews'),
+      menus: nonNullableList(doc, 'menus'),
+      tags: nonNullableList(doc, 'tags'),
+    );
+  }
+
   List<Cafe> _cafeListFromSnapShot(QuerySnapshot querySnapshot){
     return querySnapshot.docs.map((doc){
-      return Cafe(
-        name: doc['name'],
-        telephone: doc['telephone'],
-        location: doc['location'],
-        rating: doc['rating'],
-        images: nonNullableList(doc, 'images'),
-        reviews: nonNullableList(doc, 'reviews'),
-        menus: nonNullableList(doc, 'menus'),
-        tags: nonNullableList(doc, 'tags'),
-      );
+      return cafeBuilder(doc);
     }).toList();
+  }
+
+  Future<List<Cafe>> favoriteCafes (MyUser user) async {
+    List<Cafe> favoriteCafes = [];
+    for(String cafe_id in user.favorite!){
+      var document = await cafeCollection.doc(cafe_id).get();
+      favoriteCafes.add(cafeBuilder(document));
+    }
+    return favoriteCafes;
   }
 
   // 카페 스트림을 가져옴

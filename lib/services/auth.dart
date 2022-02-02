@@ -12,44 +12,44 @@ class AuthService{
   //Stream for FirbaseUser
 
   //Register With Email & Password
-  Future<bool> registerWithEmailAndPassword (String email, String pass) async {
+  Future<MyUser?> registerWithEmailAndPassword (String email, String pass) async {
     try {
       UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
         email: email,
         password: pass
       );
       MyUser user = _userFromFirebaseUser(userCredential.user);
+      return user;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         print('The password provided is too weak.');
       } else if (e.code == 'email-already-in-use') {
         print('The account already exists for that email.');
       }
-      return false;
+      return null;
     } catch (e) {
       print(e);
-      return false;
+      return null;
     }
-    return true;
   }
 
   //Sign In With Email & Password
-  Future<bool> signInWithEmailAndPassword (String email, String pass) async {
+  Future<MyUser?> signInWithEmailAndPassword (String email, String pass) async {
     try {
       UserCredential userCredential = await _auth.signInWithEmailAndPassword(
         email: email,
         password: pass
       );
-      MyUser user = _userFromFirebaseUser(userCredential.user);
+      MyUser myUser = _userFromFirebaseUser(userCredential.user);
+      return myUser;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         print('No user found for that email.');
       } else if (e.code == 'wrong-password') {
         print('Wrong password provided for that user.');
       }
-      return false;
+      return null;
     }
-  return true;
   }
 
   //Sign In Anonymously

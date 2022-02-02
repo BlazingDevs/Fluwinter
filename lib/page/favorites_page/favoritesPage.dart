@@ -1,3 +1,5 @@
+import 'package:cafegation/main.dart';
+import 'package:cafegation/models/myuser.dart';
 import 'package:flutter/material.dart';
 import 'package:cafegation/constants/colors.dart';
 import 'package:provider/provider.dart';
@@ -18,9 +20,9 @@ class _FavoritesPageState extends State<favoritesPage> {
 
   @override
   Widget build(BuildContext context) {
-    return StreamProvider<List<Cafe>>.value(
+    return FutureProvider<List<Cafe>>.value(
       initialData: const [],
-      value: DataBaseService().cafes,
+      value: DataBaseService().favoriteCafes(Provider.of<MyUser>(context)),
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: kMainColor,

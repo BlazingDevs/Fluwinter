@@ -98,7 +98,7 @@ class _loginPageState extends State<loginPage> {
                 child: MaterialButton(
                   onPressed: () {
                     _auth.signInWithEmailAndPassword(email, password).then((signInResult){
-                      if(signInResult){
+                      if(signInResult == null){
                         Navigator.pushNamed(context, searchPage.id);
                       } else {
                         print('Accont does not exists!');
