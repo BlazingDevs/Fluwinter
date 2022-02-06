@@ -1,3 +1,4 @@
+//02.02(수) push 기준 쓸데없는 페이지임. 
 import 'package:cafegation/constants/colors.dart';
 import 'package:cafegation/page/favorites_page/favoritesPage.dart';
 import 'package:cafegation/page/map_page/mapPage.dart';

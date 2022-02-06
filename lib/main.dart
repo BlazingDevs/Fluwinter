@@ -64,7 +64,7 @@ class MyApp extends StatelessWidget {
           loginPage.id: (context) => loginPage(), //로그인
           registerPage.id: (context) => registerPage(), //회원가입
           logoPage.id: (context) => logoPage(), //로고
-          searchPage.id: (context) => searchPage() //찾기 화면...
+          // searchPage.id: (context) => searchPage() //찾기 화면...
         },
       ),
     );
