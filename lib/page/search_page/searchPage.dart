@@ -1,4 +1,4 @@
-//02.02(수) push 기준 쓸데없는 페이지임. 
+
 import 'package:cafegation/constants/colors.dart';
 import 'package:cafegation/page/favorites_page/favoritesPage.dart';
 import 'package:cafegation/page/map_page/mapPage.dart';
@@ -6,6 +6,7 @@ import 'package:cafegation/page/search_page/searchbar.dart';
 import 'package:cafegation/page/tag_page/tagPage.dart';
 import 'package:flutter/material.dart';
 import 'package:kakaomap_webview/kakaomap_webview.dart';
+import 'dart:io' show Platform;
 
 class searchPage extends StatefulWidget {
   static String id = 'searchpage';
@@ -16,6 +17,7 @@ class searchPage extends StatefulWidget {
 }
 
 class _searchPageState extends State<searchPage> {
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -136,6 +138,8 @@ class _searchPageState extends State<searchPage> {
     );
   }
 }
+
+
 Future<void> _openKakaoMapScreen(BuildContext context) async {
     KakaoMapUtil util = KakaoMapUtil();
 
@@ -144,7 +148,7 @@ Future<void> _openKakaoMapScreen(BuildContext context) async {
 
     /// This is short form of the above comment
     String url =
-        await util.getMapScreenURL(37.402056, 127.108212, name: 'Kakao 본사');
+        await util.getMapScreenURL(37.5515814, 126.9227864, name: '홍익대학교');
 
     debugPrint('url : $url');
 

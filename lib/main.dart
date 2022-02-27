@@ -48,25 +48,21 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return StreamProvider<MyUser?>.value(
-      initialData: null,
-      value: AuthService().user,
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'First Page',
-        theme: ThemeData(
-          scaffoldBackgroundColor: Colors.white,
-          primarySwatch: Colors.blue,
-        ),
-        initialRoute: WelcomePage.id,
-        routes: {
-          WelcomePage.id : (context) => WelcomePage(), //웰컴
-          loginPage.id: (context) => loginPage(), //로그인
-          registerPage.id: (context) => registerPage(), //회원가입
-          logoPage.id: (context) => logoPage(), //로고
-          // searchPage.id: (context) => searchPage() //찾기 화면...
-        },
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'First Page',
+      theme: ThemeData(
+        scaffoldBackgroundColor: Colors.white,
+        primarySwatch: Colors.blue,
       ),
+      initialRoute: WelcomePage.id,
+      routes: {
+        WelcomePage.id : (context) => WelcomePage(), //웰컴
+        loginPage.id: (context) => loginPage(), //로그인
+        registerPage.id: (context) => registerPage(), //회원가입
+        logoPage.id: (context) => logoPage(), //로고
+        searchPage.id: (context) => searchPage() //찾기 화면...
+      },
     );
   }
 }

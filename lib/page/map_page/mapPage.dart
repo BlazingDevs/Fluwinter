@@ -2,7 +2,7 @@ import 'package:cafegation/constants/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kakaomap_webview/kakaomap_webview.dart';
-
+//02.02(수) push 기준 쓸데없는 페이지임. 
 const String kakaoMapKey = '00122295e8de02bfb85eaef49dee597e';
 
 void main() {
