@@ -6,15 +6,10 @@ class DataBaseService {
   //쓰기를 할때 firebase가 발급한 UID를 이용하도록 함.
   static final DataBaseService instance = DataBaseService._internal();
 
-<<<<<<< HEAD
-  DataBaseService();
-  DataBaseService.withUID({required this.uid});
-=======
   factory DataBaseService() {
     return instance;
   }
   DataBaseService._internal();
->>>>>>> e288c11c04ae17ad1b2fd285d0488a45dbc25b6b
 
   //카페 콜렉션
   final CollectionReference cafeCollection =
@@ -39,15 +34,15 @@ class DataBaseService {
     });
   }
 
-  List<String> nonNullableList(DocumentSnapshot doc, String name){
-    try{
-      return List.from( doc[name] );
-    } catch(e){
-      return const[];
+  List<String> nonNullableList(DocumentSnapshot doc, String name) {
+    try {
+      return List.from(doc[name]);
+    } catch (e) {
+      return const [];
     }
   }
 
-  Cafe cafeBuilder(DocumentSnapshot doc){
+  Cafe cafeBuilder(DocumentSnapshot doc) {
     return Cafe(
       name: doc['name'],
       telephone: doc['telephone'],
@@ -60,17 +55,16 @@ class DataBaseService {
     );
   }
 
-  List<Cafe> _cafeListFromSnapShot(QuerySnapshot querySnapshot){
-    return querySnapshot.docs.map((doc){
+  List<Cafe> _cafeListFromSnapShot(QuerySnapshot querySnapshot) {
+    return querySnapshot.docs.map((doc) {
       return cafeBuilder(doc);
     }).toList();
   }
 
-  Future<List<Cafe>> favoriteCafes (MyUser user) async {
-    if(user.favorite == null)
-      return [];
+  Future<List<Cafe>> favoriteCafes(MyUser user) async {
+    if (user.favorite == null) return [];
     List<Cafe> favoriteCafes = [];
-    for(String cafe_id in user.favorite!){
+    for (String cafe_id in user.favorite!) {
       var document = await cafeCollection.doc(cafe_id).get();
       favoriteCafes.add(cafeBuilder(document));
     }
@@ -84,12 +78,7 @@ class DataBaseService {
 
   Future<List<String>> userFavorite(String uid) async {
     DocumentSnapshot docSnapshot = await userDataCollection.doc(uid).get();
-<<<<<<< HEAD
-    Map<String, dynamic>? data = docSnapshot.data() as Map<String, dynamic>?;
-    return List.from(data?['favorites'] ?? []);
-=======
     //Map<String, dynamic>? data = docSnapshot.data() as Map<String, dynamic>?;
-    return List.from( docSnapshot['favorites'] );
->>>>>>> e288c11c04ae17ad1b2fd285d0488a45dbc25b6b
+    return List.from(docSnapshot['favorites']);
   }
 }
