@@ -68,21 +68,6 @@ class _WelcomePageState extends State<WelcomePage> {
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0),
-                child: Material(elevation: 15.0,
-                color: Colors.brown[300],
-                borderRadius: BorderRadius.circular(50.0),
-                child: MaterialButton(
-                  onPressed: (){
-                    Navigator.pushNamed(context, searchPage.id);
-                  },
-                  minWidth: 300.0,
-                  height: 43.0,
-                  child: Text('Continue Without LogIn(Debug)',style: TextStyle(color: Colors.white),),
-                  ),
-                ),
-              )
             ],
           ),
         ),
