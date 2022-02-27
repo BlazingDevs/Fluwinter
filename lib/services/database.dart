@@ -39,29 +39,6 @@ class DataBaseService {
     });
   }
 
-<<<<<<< HEAD
-  List<String> nonNullableList(
-      QueryDocumentSnapshot<Object?> doc, String name) {
-    try {
-      return List.from(doc[name]);
-    } catch (e) {
-      return const [];
-    }
-  }
-
-  List<Cafe> _cafeListFromSnapShot(QuerySnapshot querySnapshot) {
-    return querySnapshot.docs.map((doc) {
-      return Cafe(
-        name: doc['name'],
-        telephone: doc['telephone'],
-        location: doc['location'],
-        rating: doc['rating'],
-        images: nonNullableList(doc, 'images'),
-        reviews: nonNullableList(doc, 'reviews'),
-        menus: nonNullableList(doc, 'menus'),
-        tags: nonNullableList(doc, 'tags'),
-      );
-=======
   List<String> nonNullableList(DocumentSnapshot doc, String name){
     try{
       return List.from( doc[name] );
@@ -86,7 +63,6 @@ class DataBaseService {
   List<Cafe> _cafeListFromSnapShot(QuerySnapshot querySnapshot){
     return querySnapshot.docs.map((doc){
       return cafeBuilder(doc);
->>>>>>> e288c11c04ae17ad1b2fd285d0488a45dbc25b6b
     }).toList();
   }
 
