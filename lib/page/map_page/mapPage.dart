@@ -87,37 +87,37 @@ var customOverlay = new kakao.maps.CustomOverlay({
                 KakaoLatLng latlng = util.getLatLng(message.message);
                 debugPrint('current lat lng : ${latlng.lat}, ${latlng.lng}');
               }),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              InkWell(
-                onTap: () {
-                  _mapController.evaluateJavascript(
-                      'map.setLevel(map.getLevel() - 1, {animate: true})');
-                },
-                child: CircleAvatar(
-                  backgroundColor: Colors.red,
-                  child: const Icon(
-                    Icons.remove,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-              InkWell(
-                onTap: () {
-                  _mapController.evaluateJavascript(
-                      'map.setLevel(map.getLevel() + 1, {animate: true})');
-                },
-                child: CircleAvatar(
-                  backgroundColor: Colors.blue,
-                  child: const Icon(
-                    Icons.add,
-                    color: Colors.white,
-                  ),
-                ),
-              )
-            ],
-          ),
+          // Row(
+          //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          //   children: [
+          //     InkWell(
+          //       onTap: () {
+          //         _mapController.evaluateJavascript(
+          //             'map.setLevel(map.getLevel() - 1, {animate: true})');
+          //       },
+          //       child: CircleAvatar(
+          //         backgroundColor: Colors.red,
+          //         child: const Icon(
+          //           Icons.remove,
+          //           color: Colors.white,
+          //         ),
+          //       ),
+          //     ),
+          //     InkWell(
+          //       onTap: () {
+          //         _mapController.evaluateJavascript(
+          //             'map.setLevel(map.getLevel() + 1, {animate: true})');
+          //       },
+          //       child: CircleAvatar(
+          //         backgroundColor: Colors.blue,
+          //         child: const Icon(
+          //           Icons.add,
+          //           color: Colors.white,
+          //         ),
+          //       ),
+          //     )
+          //   ],
+          // ),
           ElevatedButton(
               style: ElevatedButton.styleFrom(
                             shape: new RoundedRectangleBorder(
@@ -159,7 +159,7 @@ var customOverlay = new kakao.maps.CustomOverlay({
         lat: 33.450701,
         lng: 126.570667,
         customScript: '''
-    var markers = [];
+    var markers = ['피오니'];
     
     function addMarker(position) {
     
