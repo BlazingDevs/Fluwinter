@@ -2,6 +2,8 @@
     package="com.example.cafegation">
     <uses-permission android:name="android.permission.INTERNET"/>
     <application
-        android:usesCleartextTraffic = "true"
+        android:label="cafegation"
+        android:icon="@mipmap/ic_launcher"
+        android:usesCleartextTraffic="true"
         />
 </manifest>

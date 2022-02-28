@@ -6,6 +6,7 @@ import 'package:cafegation/page/search_page/searchbar.dart';
 import 'package:cafegation/page/tag_page/tagPage.dart';
 import 'package:flutter/material.dart';
 import 'package:kakaomap_webview/kakaomap_webview.dart';
+
 import 'dart:io' show Platform;
 
 class searchPage extends StatefulWidget {
@@ -46,8 +47,12 @@ class _searchPageState extends State<searchPage> {
                             ),
                             primary: Color(0xFF2C2E43),
                             onPrimary: Colors.black),
-                        onPressed: () async {
-                          await _openKakaoMapScreen(context);
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => KakaoMapTest()));
+                          // _openKakaoMapScreen(context);
                           },
                         child: Row(
                           children: <Widget>[
