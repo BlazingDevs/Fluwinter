@@ -2,8 +2,8 @@ import 'package:cafegation/constants/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kakaomap_webview/kakaomap_webview.dart';
-//02.02(수) push 기준 쓸데없는 페이지임. 
-const String kakaoMapKey = '00122295e8de02bfb85eaef49dee597e';
+//02.02(수) push 기준 쓸데없는 페이지임. 02.28 기준 안 쓸데없음.
+const String kakaoMapKey = '258df8a7062d2ae5f0006f6e0b6796a9';
 
 void main() {
   runApp(MaterialApp(home: KakaoMapTest()));
@@ -16,16 +16,18 @@ class KakaoMapTest extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     var _mapController;
     return Scaffold(
-      appBar: AppBar(title: Text('Kakao map webview test')),
+      appBar: AppBar(
+        backgroundColor: Colors.blue[200],
+        title: Text('내 주변 카페 찾기')),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           KakaoMapView(
               width: size.width,
-              height: 400,
+              height: 650,
               kakaoMapKey: kakaoMapKey,
-              lat: 33.450701,
-              lng: 126.570667,
+              lat:37.552590921387676, 
+              lng:126.9248596640318,
               showMapTypeControl: true,
               showZoomControl: true,
               draggableMarker: true,
@@ -35,19 +37,19 @@ class KakaoMapTest extends StatelessWidget {
               },
               polygon: KakaoPolygon(
                   polygon: [
-                    KakaoLatLng(33.45086654081833, 126.56906858718982),
-                    KakaoLatLng(33.45010890948828, 126.56898629127468),
-                    KakaoLatLng(33.44979857909499, 126.57049357211622),
-                    KakaoLatLng(33.450137483918496, 126.57202991943016),
-                    KakaoLatLng(33.450706188506054, 126.57223147947938),
-                    KakaoLatLng(33.45164068091554, 126.5713126693152)
+                    KakaoLatLng(37.54437685093866, 126.92296870883536),
+                    KakaoLatLng(37.54717721045083, 126.90873476390736),
+                    KakaoLatLng(37.54717721045083, 126.90873476390736),
+                    KakaoLatLng(37.562901433668124, 126.92638442980359),
+                    KakaoLatLng(37.55505425341539, 126.93678586780096),
+                    KakaoLatLng(37.54415008748556, 126.92946099846323)
                   ],
                   polygonColor: Colors.red,
-                  polygonColorOpacity: 0.3,
-                  strokeColor: Colors.deepOrange,
+                  polygonColorOpacity: 0,
+                  strokeColor: Colors.black,
                   strokeWeight: 2.5,
                   strokeColorOpacity: 0.9),
-              // overlayText: '카카오!',
+              overlayText: '홍익대학교',
               customOverlayStyle: '''<style>
               .customoverlay {position:relative;bottom:85px;border-radius:6px;border: 1px solid #ccc;border-bottom:2px solid #ddd;float:left;}
 .customoverlay:nth-of-type(n) {border:0; box-shadow:0px 1px 2px #888;}
@@ -117,7 +119,13 @@ var customOverlay = new kakao.maps.CustomOverlay({
             ],
           ),
           ElevatedButton(
-              child: Text('Kakao map screen'),
+              style: ElevatedButton.styleFrom(
+                            shape: new RoundedRectangleBorder(
+                              borderRadius: new BorderRadius.circular(10.0),
+                            ),
+                            primary: Colors.blue[200],
+                            onPrimary: Colors.black),
+              child: Text('kakao map open'),
               onPressed: () async {
                 await _openKakaoMapScreen(context);
               })
@@ -134,7 +142,7 @@ var customOverlay = new kakao.maps.CustomOverlay({
 
     /// This is short form of the above comment
     String url =
-        await util.getMapScreenURL(37.402056, 127.108212, name: 'Kakao 본사');
+        await util.getMapScreenURL(37.5515814, 126.9227864, name: '홍익대학교');
 
     debugPrint('url : $url');
 
@@ -184,7 +192,6 @@ var customOverlay = new kakao.maps.CustomOverlay({
   }
 }
 
-// map_page 시작 git 연동되었나 실험한다고 그래봤자 주석수정..
 // class mapPage extends StatefulWidget {
 //   const mapPage({Key? key}) : super(key: key);
 
