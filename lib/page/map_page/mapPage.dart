@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:kakaomap_webview/kakaomap_webview.dart';
 //02.02(수) push 기준 쓸데없는 페이지임. 02.28 기준 안 쓸데없음.
 const String kakaoMapKey = '258df8a7062d2ae5f0006f6e0b6796a9';
-
+//why
 void main() {
   runApp(MaterialApp(home: KakaoMapTest()));
 }
