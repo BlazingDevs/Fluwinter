@@ -9,7 +9,7 @@ import 'package:cafegation/services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
-
+//git 문제해결!!
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // Initialize Firebase
