@@ -5,6 +5,8 @@
         android:label="cafegation"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+        <meta-data android:name="com.google.android.geo.API_KEY"
+               android:value="AIzaSyBjFSgXJzOyTK8vfna_jjM8scq9s21cRlg"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"
