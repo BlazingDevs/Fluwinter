@@ -4,11 +4,8 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-//02.02(수) push 기준 쓸데없는 페이지임. 02.28 기준 안 쓸데없음.
-const String kakaoMapKey = '258df8a7062d2ae5f0006f6e0b6796a9';
-
 void main() {
-  runApp(const KakaoMapTest());
+  runApp(KakaoMapTest());
 }
 
 class KakaoMapTest extends StatelessWidget {
@@ -37,11 +34,10 @@ class MapSampleState extends State<MapSample> {
 
   // 초기 카메라 위치
   static final CameraPosition _kGooglePlex = CameraPosition(
-    target: LatLng(37.42796133580664, -122.085749655962),
-    zoom: 14.4746,
+    target: LatLng(37.551769, 126.924954),
+    zoom: 15,
   );
 
-  // 호수 위치
   static final CameraPosition _kLake = CameraPosition(
       bearing: 192.8334901395799,
       target: LatLng(37.43296265331129, -122.08832357078792),
