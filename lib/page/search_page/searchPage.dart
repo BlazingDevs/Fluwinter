@@ -7,11 +7,13 @@ import 'package:cafegation/page/tag_page/tagPage.dart';
 import 'package:flutter/material.dart';
 import 'package:kakaomap_webview/kakaomap_webview.dart';
 
+
 import 'dart:io' show Platform;
 
 class searchPage extends StatefulWidget {
   static String id = 'searchpage';
   const searchPage({Key? key}) : super(key: key);
+  
 
   @override
   _searchPageState createState() => _searchPageState();
@@ -166,7 +168,7 @@ Future<void> _openKakaoMapScreen(BuildContext context) async {
     return KakaoMapView(
         width: size.width,
         height: 400,
-        kakaoMapKey: kakaoMapKey,
+        kakaoMapKey: '258df8a7062d2ae5f0006f6e0b6796a9',
         lat: 33.450701,
         lng: 126.570667,
         customScript: '''

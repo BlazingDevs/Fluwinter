@@ -1,10 +1,92 @@
+// import 'package:flutter/material.dart';
+// import 'package:get/get.dart';
+// import 'package:kakao_map_flutter/kakao_map_flutter.dart';
+
+// void main() => runApp(KakaoMapTest());
+
+// class KakaoMapTest extends StatelessWidget {
+//   KakaoMapTest({Key? key}) : super(key: key);
+
+//   late final KakaoMapController _mapController;
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return GetMaterialApp(
+//       debugShowCheckedModeBanner: false,
+//       home: Scaffold(
+//           body: SafeArea(
+//         child: Column(children: [
+//           Expanded(
+//               child: KakaoMap(
+//             initLocation: KakaoLatLng(33.450701, 126.570667),
+//             kakaoApiKey: "258df8a7062d2ae5f0006f6e0b6796a9",
+//             clustererServiceEnable: true,
+//             onMapCreated: (controller) {
+//               _mapController = controller;
+//             },
+//             onMapLoaded: () {
+//               Get.rawSnackbar(
+//                   message: "맵 로드 완료",
+//                   margin: const EdgeInsets.all(8),
+//                   borderRadius: 12.0,
+//                   snackPosition: SnackPosition.TOP);
+//               _mapController.setNowLocation();
+//             },
+//             onMarkerTouched: (markerLocation, markerIndex) {
+//               Get.rawSnackbar(
+//                   message: "$markerLocation, $markerIndex",
+//                   margin: const EdgeInsets.all(8),
+//                   borderRadius: 12.0,
+//                   snackPosition: SnackPosition.TOP);
+//             },
+//           )),
+//           _customButton("현재 위치로 이동하고 커스텀 오버레이 추가하기", onTap: () async {
+//             final location = await _mapController.setNowLocation();
+//             if (location != null) {
+//               _mapController.deleteAllCustomOverlays();
+//               _mapController.addCustomOverlay(location);
+//             }
+//           }),
+//           _customButton("지도 위치에 마커 추가하기", onTap: () async {
+//             _mapController.addMarker(await _mapController.getCenter());
+//           }, color: Colors.green),
+//           _customButton("모든 마커 삭제하기", onTap: () {
+//             _mapController.deleteAllMarkers();
+//           }, color: Colors.red),
+//           _customButton("모든 마커 클러스터링하기", onTap: () {
+//             if (!_mapController.nowClusteringEnabled())
+//               _mapController.startClustering(minLevel: 5);
+//             else
+//               _mapController.updateClustering();
+//           }, color: Colors.black87),
+//         ]),
+//       )),
+//     );
+//   }
+
+//   Widget _customButton(String text,
+//           {Function()? onTap, Color color = Colors.lightBlue}) =>
+//       SizedBox(
+//           width: double.infinity,
+//           child: Material(
+//             color: color,
+//             child: InkWell(
+//                 onTap: onTap,
+//                 child: Padding(
+//                     padding: const EdgeInsets.fromLTRB(0, 16, 0, 16),
+//                     child: Text(text,
+//                         style: TextStyle(
+//                             color: Colors.white, fontWeight: FontWeight.bold),
+//                         textAlign: TextAlign.center))),
+//           ));
+// }
 import 'package:cafegation/constants/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kakaomap_webview/kakaomap_webview.dart';
 //02.02(수) push 기준 쓸데없는 페이지임. 02.28 기준 안 쓸데없음.
 const String kakaoMapKey = '258df8a7062d2ae5f0006f6e0b6796a9';
-//why
+
 void main() {
   runApp(MaterialApp(home: KakaoMapTest()));
 }
@@ -16,6 +98,7 @@ class KakaoMapTest extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     var _mapController;
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor: Colors.blue[200],
         title: Text('내 주변 카페 찾기')),
@@ -30,7 +113,7 @@ class KakaoMapTest extends StatelessWidget {
               lng:126.9248596640318,
               showMapTypeControl: true,
               showZoomControl: true,
-              draggableMarker: true,
+              draggableMarker: false,
               mapType: MapType.BICYCLE,
               mapController: (controller) {
                 _mapController = controller;
@@ -87,37 +170,6 @@ var customOverlay = new kakao.maps.CustomOverlay({
                 KakaoLatLng latlng = util.getLatLng(message.message);
                 debugPrint('current lat lng : ${latlng.lat}, ${latlng.lng}');
               }),
-          // Row(
-          //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          //   children: [
-          //     InkWell(
-          //       onTap: () {
-          //         _mapController.evaluateJavascript(
-          //             'map.setLevel(map.getLevel() - 1, {animate: true})');
-          //       },
-          //       child: CircleAvatar(
-          //         backgroundColor: Colors.red,
-          //         child: const Icon(
-          //           Icons.remove,
-          //           color: Colors.white,
-          //         ),
-          //       ),
-          //     ),
-          //     InkWell(
-          //       onTap: () {
-          //         _mapController.evaluateJavascript(
-          //             'map.setLevel(map.getLevel() + 1, {animate: true})');
-          //       },
-          //       child: CircleAvatar(
-          //         backgroundColor: Colors.blue,
-          //         child: const Icon(
-          //           Icons.add,
-          //           color: Colors.white,
-          //         ),
-          //       ),
-          //     )
-          //   ],
-          // ),
           ElevatedButton(
               style: ElevatedButton.styleFrom(
                             shape: new RoundedRectangleBorder(
@@ -133,7 +185,7 @@ var customOverlay = new kakao.maps.CustomOverlay({
       ),
     );
   }
-
+  
   Future<void> _openKakaoMapScreen(BuildContext context) async {
     KakaoMapUtil util = KakaoMapUtil();
 
@@ -152,14 +204,16 @@ var customOverlay = new kakao.maps.CustomOverlay({
 
   Widget _testingCustomScript(
       {required Size size, required BuildContext context}) {
+        
     return KakaoMapView(
         width: size.width,
         height: 400,
         kakaoMapKey: kakaoMapKey,
-        lat: 33.450701,
-        lng: 126.570667,
-        customScript: '''
-    var markers = ['피오니'];
+        lat: 37.5515814,
+        lng: 126.9227864,
+        customScript: '''  
+        
+        var markers = ["피오니", "라헬의 부엌"];
     
     function addMarker(position) {
     
@@ -170,25 +224,24 @@ var customOverlay = new kakao.maps.CustomOverlay({
       markers.push(marker);
     }
     
-    for(var i = 0 ; i < 3 ; i++){
-      addMarker(new kakao.maps.LatLng(33.450701 + 0.0003 * i, 126.570667 + 0.0003 * i));
-      
-      kakao.maps.event.addListener(markers[i], 'click', function(){
-        onTapMarker.postMessage('marker ' + i + ' is tapped');
-     });
-    }
+    kakao.maps.event.addListener(markers[0], 'click', function(){ 
+      onTapMarker.postMessage('marker 0 is tapped'); }); 
+    kakao.maps.event.addListener(markers[1], 'click', function(){ 
+      onTapMarker.postMessage('marker 1 is tapped'); }); 
+    kakao.maps.event.addListener(markers[2], 'click', function(){ 
+      onTapMarker.postMessage('marker 2 is tapped'); });
+
     
 		  var zoomControl = new kakao.maps.ZoomControl();
       map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
    
       var mapTypeControl = new kakao.maps.MapTypeControl();
       map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
-    
-              ''',
         onTapMarker: (message) {
           ScaffoldMessenger.of(context)
               .showSnackBar(SnackBar(content: Text(message.message)));
-        });
+        }''',
+    );
   }
 }
 
