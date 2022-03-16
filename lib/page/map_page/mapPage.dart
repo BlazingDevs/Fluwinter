@@ -3,9 +3,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+
 //02.02(수) push 기준 쓸데없는 페이지임. 02.28 기준 안 쓸데없음.
 const String kakaoMapKey = '258df8a7062d2ae5f0006f6e0b6796a9';
-//why
+
 void main() {
   runApp(const KakaoMapTest());
 }
