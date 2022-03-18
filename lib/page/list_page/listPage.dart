@@ -15,6 +15,7 @@ class listPage extends StatefulWidget {
 class _listPageState extends State<listPage> {
   bool _favoriteButtonPressed = false;
   int i = 0;
+  FirebaseAuth user = FirebaseAuth.instance;
   List<Widget> makeListWidget(AsyncSnapshot snapshot) {
     return snapshot.data.docs.map<Widget>((document) {
       return ListTile(
@@ -48,7 +49,7 @@ class _listPageState extends State<listPage> {
                 _favoriteButtonPressed = !_favoriteButtonPressed;
                 FirebaseFirestore.instance
                     .collection('user_data')
-                    .doc('hpRMlobAuTPg5lOjC3zTnJJCeHa2')
+                    .doc(user.currentUser!.uid)
                     .set({
                   'favorites': {i.toString(): document["name"]}
                 }, SetOptions(merge: true));
