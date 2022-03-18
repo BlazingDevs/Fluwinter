@@ -14,10 +14,7 @@ class listPage extends StatefulWidget {
 
 class _listPageState extends State<listPage> {
   bool _favoriteButtonPressed = false;
-
-  DocumentReference _documentReference = FirebaseFirestore.instance
-      .collection('user_data')
-      .doc('hpRMlobAuTPg5lOjC3zTnJJCeHa2');
+  int i = 0;
   List<Widget> makeListWidget(AsyncSnapshot snapshot) {
     return snapshot.data.docs.map<Widget>((document) {
       return ListTile(
@@ -49,10 +46,14 @@ class _listPageState extends State<listPage> {
               //t였다면 userdata에서 삭제, f였다면 userdata에 추가
               setState(() {
                 _favoriteButtonPressed = !_favoriteButtonPressed;
-                _documentReference.set({
-                  'favorites': document["name"]
-                });
+                FirebaseFirestore.instance
+                    .collection('user_data')
+                    .doc('hpRMlobAuTPg5lOjC3zTnJJCeHa2')
+                    .set({
+                  'favorites': {i.toString(): document["name"]}
+                }, SetOptions(merge: true));
               });
+              i += 1;
             },
           ));
     }).toList();
