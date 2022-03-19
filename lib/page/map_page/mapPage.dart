@@ -11,9 +11,10 @@ void main() {
 class KakaoMapTest extends StatelessWidget {
   const KakaoMapTest({Key? key}) : super(key: key);
 
+  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-        return MaterialApp(
+    return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
@@ -22,7 +23,7 @@ class KakaoMapTest extends StatelessWidget {
     );
   }
 }
-  
+
 class MapSample extends StatefulWidget {
   @override
   State<MapSample> createState() => MapSampleState();
@@ -43,7 +44,7 @@ class MapSampleState extends State<MapSample> {
       tilt: 59.440717697143555,
       zoom: 19.151926040649414);
 
-    @override
+  @override
   Widget build(BuildContext context) {
     return new Scaffold(
       body: GoogleMap(
@@ -67,4 +68,4 @@ class MapSampleState extends State<MapSample> {
     final GoogleMapController controller = await _controller.future;
     controller.animateCamera(CameraUpdate.newCameraPosition(_kLake));
   }
-} 
+}

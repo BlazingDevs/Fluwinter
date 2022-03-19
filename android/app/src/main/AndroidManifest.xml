@@ -1,12 +1,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.cafegation">
     <!--<uses-permission android:name="android.permission.INTERNET"/>-->
+    <!-- 위치 정보 엑세스 권한 요청 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/> 
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <application
         android:label="cafegation"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <meta-data android:name="com.google.android.geo.API_KEY"
-               android:value="AIzaSyBjFSgXJzOyTK8vfna_jjM8scq9s21cRlg"/>
+               android:value="AIzaSyDu6-58FuJ_fSfhpL9Cj352fewADy3uk2w"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"
