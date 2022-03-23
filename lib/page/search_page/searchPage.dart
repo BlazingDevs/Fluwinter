@@ -34,6 +34,7 @@ class _searchPageState extends State<searchPage> {
           IconButton(
               onPressed: () {
                 Navigator.pop(context);
+                Navigator.pop(context);
               },
               icon: Icon(Icons.logout_rounded))
         ],
