@@ -1,10 +1,10 @@
-
 import 'package:cafegation/constants/colors.dart';
 import 'package:cafegation/page/favorites_page/favoritesPage.dart';
 import 'package:cafegation/page/map_page/mapPage.dart';
 import 'package:cafegation/page/search_page/searchbar.dart';
 import 'package:cafegation/page/tag_page/tagPage.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:kakaomap_webview/kakaomap_webview.dart';
 
 import 'dart:io' show Platform;
@@ -18,15 +18,25 @@ class searchPage extends StatefulWidget {
 }
 
 class _searchPageState extends State<searchPage> {
-  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,   
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor: Colors.blue[200],
         shadowColor: Colors.blue[300],
         title: Text('Search Page'),
+        automaticallyImplyLeading: false,
+        leading: const SizedBox(
+          width: 100,
+        ),
+        actions: [
+          IconButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              icon: Icon(Icons.logout_rounded))
+        ],
       ),
       body: SafeArea(
         child: Center(
@@ -53,20 +63,24 @@ class _searchPageState extends State<searchPage> {
                               MaterialPageRoute(
                                   builder: (context) => KakaoMapTest()));
                           // _openKakaoMapScreen(context);
-                          },
-                        child: Row(
-                          children: <Widget>[
-                            Icon(Icons.location_on,color: Colors.white,),
-                            SizedBox(width: 15,),
-                            Text(
+                        },
+                        child: Row(children: <Widget>[
+                          Icon(
+                            Icons.location_on,
+                            color: Colors.white,
+                          ),
+                          SizedBox(
+                            width: 15,
+                          ),
+                          Text(
                             '내 주변 카페 찾기',
                             style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 23.0,
                                 letterSpacing: 5.0,
                                 fontWeight: FontWeight.normal),
-                          ),]
-                        ),
+                          ),
+                        ]),
                       ),
                     ),
                     SizedBox(height: 30),
@@ -86,19 +100,23 @@ class _searchPageState extends State<searchPage> {
                               MaterialPageRoute(
                                   builder: (context) => tagPage()));
                         },
-                        child: Row(
-                          children: <Widget>[
-                            Icon(Icons.menu,color: Colors.white,),
-                            SizedBox(width: 15,),
-                            Text(
+                        child: Row(children: <Widget>[
+                          Icon(
+                            Icons.menu,
+                            color: Colors.white,
+                          ),
+                          SizedBox(
+                            width: 15,
+                          ),
+                          Text(
                             '카테고리별 카페 찾기',
                             style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 23.0,
                                 letterSpacing: 5.0,
                                 fontWeight: FontWeight.normal),
-                          ),]
-                        ),
+                          ),
+                        ]),
                       ),
                     ),
                     SizedBox(height: 30),
@@ -118,19 +136,23 @@ class _searchPageState extends State<searchPage> {
                               MaterialPageRoute(
                                   builder: (context) => favoritesPage()));
                         },
-                        child: Row(
-                          children: <Widget>[
-                            Icon(Icons.favorite_border,color: Colors.white,),
-                            SizedBox(width: 15,),
-                            Text(
+                        child: Row(children: <Widget>[
+                          Icon(
+                            Icons.favorite_border,
+                            color: Colors.white,
+                          ),
+                          SizedBox(
+                            width: 15,
+                          ),
+                          Text(
                             '즐겨찾는 카페 찾기',
                             style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 23.0,
                                 letterSpacing: 5.0,
                                 fontWeight: FontWeight.normal),
-                          ),]
-                        ),
+                          ),
+                        ]),
                       ),
                     ),
                   ],
@@ -144,32 +166,31 @@ class _searchPageState extends State<searchPage> {
   }
 }
 
-
 Future<void> _openKakaoMapScreen(BuildContext context) async {
-    KakaoMapUtil util = KakaoMapUtil();
+  KakaoMapUtil util = KakaoMapUtil();
 
-    // String url = await util.getResolvedLink(
-    //     util.getKakaoMapURL(37.402056, 127.108212, name: 'Kakao 본사'));
+  // String url = await util.getResolvedLink(
+  //     util.getKakaoMapURL(37.402056, 127.108212, name: 'Kakao 본사'));
 
-    /// This is short form of the above comment
-    String url =
-        await util.getMapScreenURL(37.5515814, 126.9227864, name: '홍익대학교');
+  /// This is short form of the above comment
+  String url =
+      await util.getMapScreenURL(37.5515814, 126.9227864, name: '홍익대학교');
 
-    debugPrint('url : $url');
+  debugPrint('url : $url');
 
-    Navigator.push(
-        context, MaterialPageRoute(builder: (_) => KakaoMapScreen(url: url)));
-  }
+  Navigator.push(
+      context, MaterialPageRoute(builder: (_) => KakaoMapScreen(url: url)));
+}
 
-  Widget _testingCustomScript(
-      {required Size size, required BuildContext context}) {
-    return KakaoMapView(
-        width: size.width,
-        height: 400,
-        kakaoMapKey: kakaoMapKey,
-        lat: 33.450701,
-        lng: 126.570667,
-        customScript: '''
+Widget _testingCustomScript(
+    {required Size size, required BuildContext context}) {
+  return KakaoMapView(
+      width: size.width,
+      height: 400,
+      kakaoMapKey: '258df8a7062d2ae5f0006f6e0b6796a9',
+      lat: 33.450701,
+      lng: 126.570667,
+      customScript: '''
     var markers = [];
     
     function addMarker(position) {
@@ -196,8 +217,8 @@ Future<void> _openKakaoMapScreen(BuildContext context) async {
       map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
     
               ''',
-        onTapMarker: (message) {
-          ScaffoldMessenger.of(context)
-              .showSnackBar(SnackBar(content: Text(message.message)));
-        });
-  }
+      onTapMarker: (message) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text(message.message)));
+      });
+}

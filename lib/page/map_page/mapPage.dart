@@ -4,13 +4,11 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'dart:math';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-//import 'package:location/location.dart';
-//import 'package:geolocator/geolocator.dart';
-//02.02(수) push 기준 쓸데없는 페이지임. 02.28 기준 안 쓸데없음.
+
 const String kakaoMapKey = '258df8a7062d2ae5f0006f6e0b6796a9';
-//why
+
 void main() {
-  runApp(const KakaoMapTest());
+  runApp(KakaoMapTest());
 }
 
 class KakaoMapTest extends StatelessWidget {
@@ -1077,54 +1075,4 @@ class _MapSampleState extends State<MapSample> {
     );
   }
 }
-  // // 애플리케이션에서 지도를 이동하기 위한 컨트롤러
-  // late GoogleMapController _controller;
 
-  // // 이 값은 지도가 시작될 때 첫 번째 위치입니다.
-  // final CameraPosition _initialPosition =
-  //     CameraPosition(
-  //       target: LatLng(37.55161117059624, 126.92496705369715),
-  //       zoom: 18
-  //       );
-
-  // // 지도 클릭 시 표시할 장소에 대한 마커 목록
-  // final List<Marker> markers = [];
-
-  // addMarker(cordinate) {
-  //   int id = Random().nextInt(100);
-
-  //   setState(() {
-  //     markers
-  //         .add(Marker(position: cordinate, markerId: MarkerId(id.toString())));
-  //   });
-  // }
-
-  // @override
-  // Widget build(BuildContext context) {
-  //   return Scaffold(
-  //       body: GoogleMap(
-  //         initialCameraPosition: _initialPosition,
-  //         mapType: MapType.normal,
-  //         onMapCreated: (controller) {
-  //           setState(() {
-  //             _controller = controller;
-  //           });
-  //         },
-  //         markers: markers.toSet(),
-
-  //         // 클릭한 위치가 중앙에 표시
-  //         onTap: (cordinate) {
-  //           _controller.animateCamera(CameraUpdate.newLatLng(cordinate));
-  //           addMarker(cordinate);
-  //         },
-  //       ),
-
-  //       // floatingActionButton 클릭시 줌 아웃
-  //       // floatingActionButton: FloatingActionButton(
-  //       //   onPressed: () {
-  //       //     _controller.animateCamera(CameraUpdate.zoomOut());
-  //       //   },
-  //       //   child: Icon(Icons.zoom_out),
-  //       // )
-  //       );
-  // }
