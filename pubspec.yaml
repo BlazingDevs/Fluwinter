@@ -47,6 +47,7 @@ dependencies:
   flutter_spinkit: ^5.1.0
   kakao_map_flutter: ^0.0.4
   get: ^4.6.1
+  favorite_button: ^0.0.4
 
 
 dev_dependencies:
