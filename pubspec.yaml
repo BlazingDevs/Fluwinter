@@ -45,10 +45,11 @@ dependencies:
   cloud_firestore: ^3.1.5
   provider: ^6.0.1
   flutter_spinkit: ^5.1.0
-  kakao_map_flutter: ^0.0.4
-  get: ^4.6.1
+  location: ^4.3.0
+  location_web: ^3.1.1
+  geolocator: ^8.2.0
+  geolocator_web: ^2.1.4
   favorite_button: ^0.0.4
-
 
 dev_dependencies:
   flutter_test:
