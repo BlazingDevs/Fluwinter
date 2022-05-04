@@ -4,7 +4,7 @@ import 'package:cafegation/page/map_page/mapPage.dart';
 import 'package:cafegation/page/search_page/searchbar.dart';
 import 'package:cafegation/page/tag_page/tagPage.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+// import 'package:get/get.dart';
 import 'package:kakaomap_webview/kakaomap_webview.dart';
 
 import 'dart:io' show Platform;
