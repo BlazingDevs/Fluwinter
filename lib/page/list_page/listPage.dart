@@ -42,11 +42,19 @@ class _listPageState extends State<listPage> {
             isFavorite: false,
             valueChanged: (_isFavorite) {
               var list = [document["name"]];
-              FirebaseFirestore.instance
-                  .collection('user_data')
-                  .doc(user.currentUser!.uid)
-                  .set({"favorites": FieldValue.arrayUnion(list)},
-                      SetOptions(merge: true));
+              if (_isFavorite == false) {
+                FirebaseFirestore.instance
+                    .collection('user_data')
+                    .doc(user.currentUser!.uid)
+                    .set({"favorites": FieldValue.arrayRemove(list)},
+                        SetOptions(merge: true));
+              } else {
+                FirebaseFirestore.instance
+                    .collection('user_data')
+                    .doc(user.currentUser!.uid)
+                    .set({"favorites": FieldValue.arrayUnion(list)},
+                        SetOptions(merge: true));
+              }
             },
           ));
     }).toList();
