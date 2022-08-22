@@ -41,19 +41,19 @@ class _listPageState extends State<listPage> {
             iconSize: 25.0,
             isFavorite: false,
             valueChanged: (_isFavorite) {
-              var list = [document["name"]];
+              var list = [
+                {"id": document["name"], "tag": document["tags"]}
+              ];
               if (_isFavorite == false) {
                 FirebaseFirestore.instance
                     .collection('user_data')
                     .doc(user.currentUser!.uid)
-                    .set({"favorites": FieldValue.arrayRemove(list)},
-                        SetOptions(merge: true));
+                    .set({"favorites": FieldValue.arrayRemove(list)}, SetOptions(merge: true));
               } else {
                 FirebaseFirestore.instance
                     .collection('user_data')
                     .doc(user.currentUser!.uid)
-                    .set({"favorites": FieldValue.arrayUnion(list)},
-                        SetOptions(merge: true));
+                    .set({"favorites": FieldValue.arrayUnion(list)}, SetOptions(merge: true));
               }
             },
           ));
