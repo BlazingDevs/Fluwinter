@@ -21,8 +21,7 @@ class _detailPageState extends State<detailPage> {
   List<dynamic> _tags = ['태그1', '태그2', '태그3'];
 
   PreferredSizeWidget _appBarWidget() {
-    DocumentReference _documentReference =
-        FirebaseFirestore.instance.collection('cafes').doc(widget.cafeName);
+    DocumentReference _documentReference = FirebaseFirestore.instance.collection('cae').doc(widget.cafeName);
 
     return AppBar(
       elevation: 0,
@@ -36,9 +35,7 @@ class _detailPageState extends State<detailPage> {
       actions: [
         IconButton(
           icon: Image.asset(
-            _favoriteButtonPressed
-                ? 'assets/heart.png'
-                : 'assets/heart_border.png',
+            _favoriteButtonPressed ? 'assets/heart.png' : 'assets/heart_border.png',
             color: Colors.red[500],
           ),
           onPressed: () {
@@ -64,8 +61,7 @@ class _detailPageState extends State<detailPage> {
 
   Widget _tagWidget(String tagName) {
     return Container(
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(30), color: kGreyColor),
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(30), color: kGreyColor),
       child: Padding(
         padding: const EdgeInsets.all(7.0),
         child: Text(
@@ -79,8 +75,7 @@ class _detailPageState extends State<detailPage> {
   Widget _bodyWidget() {
     var size = MediaQuery.of(context).size;
 
-    DocumentReference _documentReference =
-        FirebaseFirestore.instance.collection('cafes').doc(widget.cafeName);
+    DocumentReference _documentReference = FirebaseFirestore.instance.collection('cae').doc(widget.cafeName);
 
     return StreamBuilder(
       stream: _documentReference.snapshots(),
@@ -93,7 +88,7 @@ class _detailPageState extends State<detailPage> {
           return Text("Loading");
         }
 
-        _images = snapshot.data!['images'][0];
+        _images = snapshot.data!['images'];
         _name = snapshot.data!['name'];
         _location = snapshot.data!['location'];
         _tags = snapshot.data!['tags'];
@@ -106,16 +101,13 @@ class _detailPageState extends State<detailPage> {
                 width: double.infinity,
                 height: size.height * 0.5,
                 decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image: NetworkImage(_images), fit: BoxFit.cover),
+                  image: DecorationImage(image: NetworkImage(_images), fit: BoxFit.cover),
                 ),
               ),
               Container(
                 margin: EdgeInsets.only(top: size.height * 0.45),
                 width: double.infinity,
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(30)),
+                decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(30)),
                 child: Padding(
                   padding: const EdgeInsets.all(20),
                   child: Column(
@@ -234,9 +226,6 @@ class _detailPageState extends State<detailPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        extendBodyBehindAppBar: true,
-        appBar: _appBarWidget(),
-        body: _bodyWidget());
+    return Scaffold(extendBodyBehindAppBar: true, appBar: _appBarWidget(), body: _bodyWidget());
   }
 }
