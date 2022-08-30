@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:cafegation/page/detail_page/detailPage.dart';
 import 'package:cafegation/services/database.dart';
+import 'package:cafegation/page/list_page/CafeItem.dart';
 
 class SearchScreen extends StatefulWidget {
   _SearchScreenState createState() => _SearchScreenState();
@@ -52,6 +53,8 @@ class _SearchScreenState extends State<SearchScreen> {
 
   Widget _buildListItem(BuildContext context, DocumentSnapshot data) {
     final cafe = DataBaseService.instance.cafeBuilder(data);
+    
+
     return InkWell(
       child: Image.network(cafe.images),
       // onTap: () {
@@ -67,6 +70,7 @@ class _SearchScreenState extends State<SearchScreen> {
           MaterialPageRoute(
               builder: (context) => detailPage(
                     cafeName: cafe.name,
+                    likedStatus: cafe.
                   )),
         );
       },
