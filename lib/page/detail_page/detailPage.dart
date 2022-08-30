@@ -3,6 +3,8 @@ import 'package:cafegation/page/location_page/locationPage.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+//PUSH check 주석 수정
+
 class detailPage extends StatefulWidget {
   const detailPage({Key? key, required this.cafeName}) : super(key: key);
 
