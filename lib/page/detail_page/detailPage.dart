@@ -3,6 +3,7 @@ import 'package:cafegation/page/detail_page/detailMapPage.dart';
 import 'package:cafegation/page/location_page/locationPage.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cafegation/models/cafe.dart';
 
 class detailPage extends StatefulWidget {
   const detailPage({Key? key, required this.cafeName, required this.likedStatus}) : super(key: key);
@@ -94,7 +95,7 @@ class _detailPageState extends State<detailPage> {
           return Text("Loading");
         }
 
-        _images = snapshot.data!['images'][0];
+        _images = snapshot.data!['images'];
         _name = snapshot.data!['name'];
         _location = snapshot.data!['location'];
         _tags = snapshot.data!['tags'];

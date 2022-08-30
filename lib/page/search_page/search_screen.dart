@@ -1,5 +1,8 @@
+import 'package:cafegation/models/cafe.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-
+import 'package:cafegation/page/detail_page/detailPage.dart';
+import 'package:cafegation/services/database.dart';
 class SearchScreen extends StatefulWidget {
   _SearchScreenState createState() => _SearchScreenState();
 }
@@ -19,18 +22,19 @@ class _SearchScreenState extends State<SearchScreen> {
 
   Widget _buildBody(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
-      stream: Firestore.instance.collection('movie').snapshots(),
+      stream: FirebaseFirestore.instance.collection('cae').snapshots(),
       builder: (context, snapshot) {
         if (!snapshot.hasData) return LinearProgressIndicator();
-        return _buildList(context, snapshot.data.documents);
+        return _buildList(context, snapshot.data!.docs);
       },
     );
   }
 
-  Widget _buildList(BuildContext context, List<DocumentSnapshot> snapshot) {
+  Widget _buildList(BuildContext context, List<DocumentSnapshot> snapshot) {    
     List<DocumentSnapshot> searchResults = [];
     for (DocumentSnapshot d in snapshot) {
-      if (d.data.toString().contains(_searchText)) {
+      final cafe = DataBaseService.instance.cafeBuilder(d);
+      if (cafe.name.toString().contains(_searchText)) {
         searchResults.add(d);
       }
     }
@@ -46,23 +50,23 @@ class _SearchScreenState extends State<SearchScreen> {
   }
 
   Widget _buildListItem(BuildContext context, DocumentSnapshot data) {
-    final movie = Movie.fromSnapshot(data);
+    final cafe = DataBaseService.instance.cafeBuilder(data);
     return InkWell(
-      child: Image.network(movie.poster),
-      onTap: () {
-        Navigator.of(context).push(MaterialPageRoute<Null>(
-            fullscreenDialog: true,
-            builder: (BuildContext context) {
-              return DetailScreen(movie: movie);
-            }));
-      },
+      child: Image.network(cafe.images),
+      // onTap: () {
+      //   Navigator.of(context).push(MaterialPageRoute<Null>(
+      //       fullscreenDialog: true,
+      //       builder: (BuildContext context) {
+      //         return detailPage(cafe: cafe);
+      //       }));
+      // },
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
+    return Scaffold(
+      body: Column(
         children: <Widget>[
           Padding(
             padding: EdgeInsets.all(30),
@@ -83,10 +87,10 @@ class _SearchScreenState extends State<SearchScreen> {
                     controller: _filter,
                     decoration: InputDecoration(
                       filled: true,
-                      fillColor: Colors.white12,
+                      fillColor: Colors.white,
                       prefixIcon: Icon(
                         Icons.search,
-                        color: Colors.white60,
+                        color: Colors.black,
                         size: 20,
                       ),
                       suffixIcon: focusNode.hasFocus
@@ -119,7 +123,7 @@ class _SearchScreenState extends State<SearchScreen> {
                 ),
                 focusNode.hasFocus
                     ? Expanded(
-                        child: FlatButton(
+                        child: TextButton(
                           child: Text('취소'),
                           onPressed: () {
                             setState(() {
