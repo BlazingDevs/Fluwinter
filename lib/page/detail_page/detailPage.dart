@@ -1,4 +1,5 @@
 import 'package:cafegation/constants/colors.dart';
+import 'package:cafegation/page/detail_page/detailMapPage.dart';
 import 'package:cafegation/page/location_page/locationPage.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -19,6 +20,9 @@ class _detailPageState extends State<detailPage> {
   String _name = "카페 이름";
   String _location = "장소";
   List<dynamic> _tags = ['태그1', '태그2', '태그3'];
+  // List<double> _allcoordinate = [0.0001,0.0001];
+  double _xcoordinate = 0.00000001;
+  double _ycoordinate = 0.00000001;
 
   PreferredSizeWidget _appBarWidget() {
     DocumentReference _documentReference =
@@ -52,10 +56,7 @@ class _detailPageState extends State<detailPage> {
         IconButton(
           icon: const Icon(Icons.location_pin),
           onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const locationPage()),
-            );
+            Navigator.of(context).push(MaterialPageRoute(builder: (context)=> detailMapPage(xcoordinate: _xcoordinate,ycoordinate: _ycoordinate,)));
           },
         ),
       ],
@@ -97,6 +98,8 @@ class _detailPageState extends State<detailPage> {
         _name = snapshot.data!['name'];
         _location = snapshot.data!['location'];
         _tags = snapshot.data!['tags'];
+        _xcoordinate = snapshot.data!['coordinates'][0];
+        _ycoordinate = snapshot.data!['coordinates'][1];
 
         return SingleChildScrollView(
           child: Stack(

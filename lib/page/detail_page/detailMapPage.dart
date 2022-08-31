@@ -1,18 +1,23 @@
+
 import 'package:cafegation/constants/colors.dart';
+import 'package:cafegation/page/detail_page/detailMapModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'dart:math';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+
 void main() {
-  runApp(KakaoMapTest());
+  runApp(detailMapPage(xcoordinate: 0.0,ycoordinate: 0.0));
 }
 
-class KakaoMapTest extends StatelessWidget {
-  const KakaoMapTest({Key? key}) : super(key: key);
-
-  // This widget is the root of your application.
+class detailMapPage extends StatelessWidget {
+  const detailMapPage({Key? key,required this.xcoordinate, required this.ycoordinate}) : super(key: key);
+  final double xcoordinate;
+  final double ycoordinate;
+  
+  
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -20,24 +25,21 @@ class KakaoMapTest extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MapSample(),
+      home: MapSample(xco:xcoordinate,yco: ycoordinate,),
     );
   }
 }
-
-
 class MapSample extends StatefulWidget {
-  late final String title;
-
+  final double xco;
+  final double yco;
+  const MapSample({Key? key, required this.xco,required this.yco,}) : super(key: key);
   @override
   _MapSampleState createState() => _MapSampleState();
 }
 
 class _MapSampleState extends State<MapSample> {
   Set<Marker> _markers = {};
-
   late BitmapDescriptor mapMarker;
-
   @override
   void initState() {
     // TODO: implement initState
@@ -46,8 +48,7 @@ class _MapSampleState extends State<MapSample> {
   }
 
   void setCustomMarker() async {
-     // mapMarker = await BitmapDescriptor.fromAssetImage(ImageConfiguration(), 'assets/voramarker.png');
-    mapMarker = await BitmapDescriptor.fromAssetImage(ImageConfiguration(), 'aa/voramarker.png');
+    mapMarker = await BitmapDescriptor.fromAssetImage(ImageConfiguration(), 'assets/voramarker.png');
   }
 
   var cafe_position_dic = { 
@@ -1058,6 +1059,7 @@ class _MapSampleState extends State<MapSample> {
     );
 
   }
+  
   @override
   Widget build(BuildContext context){
     return Scaffold(
@@ -1068,7 +1070,7 @@ class _MapSampleState extends State<MapSample> {
         onMapCreated: _onMapCreated,
         markers: _markers,
         initialCameraPosition: CameraPosition(
-          target: LatLng(37.55161117059624, 126.92496705369715),
+          target: LatLng(widget.xco, widget.yco),
           zoom: 18)
         )
     );
