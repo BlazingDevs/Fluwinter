@@ -19,7 +19,7 @@ class CafeItem extends StatelessWidget {
             context,
             MaterialPageRoute(
                 builder: (context) => detailPage(
-                      cafeName: cafe.name,
+                      id: cafe.id,
                     )),
           );
         },
