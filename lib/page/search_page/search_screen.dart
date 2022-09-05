@@ -33,7 +33,7 @@ class _SearchScreenState extends State<SearchScreen> {
     );
   }
 
-  Widget _buildList(BuildContext context, List<DocumentSnapshot> snapshot) {    
+  Widget _buildList(BuildContext context, List<DocumentSnapshot> snapshot) {
     List<DocumentSnapshot> searchResults = [];
     for (DocumentSnapshot d in snapshot) {
       final cafe = DataBaseService.instance.cafeBuilder(d);
