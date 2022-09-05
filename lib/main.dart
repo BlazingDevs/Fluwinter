@@ -8,11 +8,13 @@ import 'package:cafegation/page/search_page/searchPage.dart';
 import 'package:cafegation/services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_config/flutter_config.dart';
 import 'package:provider/provider.dart';
 
 //git 문제해결!!
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized();//추가
+  await FlutterConfig.loadEnvVariables(); //추가
   // Initialize Firebase
 
   bool init = false;
@@ -49,6 +51,8 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    print(FlutterConfig.get('maps_Android_APIKey'));
+    print(FlutterConfig.get('maps_iOS_APIKey'));
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'First Page',
