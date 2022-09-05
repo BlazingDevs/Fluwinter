@@ -9,8 +9,9 @@ class SearchBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
-      padding: EdgeInsets.symmetric(horizontal: 30, vertical: 5),
+      alignment: Alignment(-1.0, 0.0),
+      margin: EdgeInsets.symmetric(vertical: 30, horizontal: 20),
+      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 6),
       decoration: BoxDecoration(
         boxShadow: [
           BoxShadow(color: Colors.grey.withOpacity(0.5), offset: Offset(0, 3))
@@ -27,10 +28,15 @@ class SearchBar extends StatelessWidget {
       //   ),
       // ),
       // child: Scaffold(body: TabBarView(children: <Widget> [SearchScreen(),]))
-      child: IconButton(
-        icon: Icon(
-          Icons.search,
-          size: 20,
+      child: TextButton.icon(
+        label: Text(
+          '카페 검색하기',
+          style: TextStyle(fontSize: 19),
+        ),
+        icon: Icon(Icons.search, size: 22),
+        style: TextButton.styleFrom(
+          primary: Colors.black54,
+          alignment: Alignment.centerLeft,
         ),
         onPressed: () {
           Navigator.push(

@@ -25,7 +25,7 @@ class _searchPageState extends State<searchPage> {
       appBar: AppBar(
         backgroundColor: Colors.blue[200],
         shadowColor: Colors.blue[300],
-        title: Text('Search Page'),
+        title: Text('Main Page'),
         automaticallyImplyLeading: false,
         leading: const SizedBox(
           width: 100,
@@ -47,7 +47,7 @@ class _searchPageState extends State<searchPage> {
                 child: Column(
                   children: <Widget>[
                     SearchBar(),
-                    SizedBox(height: 30),
+                    SizedBox(height: 1),
                     Container(
                       width: MediaQuery.of(context).size.width * 0.9,
                       height: MediaQuery.of(context).size.height * 0.09,
@@ -59,7 +59,10 @@ class _searchPageState extends State<searchPage> {
                             primary: Color(0xFF2C2E43),
                             onPrimary: Colors.black),
                         onPressed: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => KakaoMapTest()));
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => KakaoMapTest()));
                           // _openKakaoMapScreen(context);
                         },
                         child: Row(children: <Widget>[
@@ -72,7 +75,11 @@ class _searchPageState extends State<searchPage> {
                           ),
                           Text(
                             '내 주변 카페 찾기',
-                            style: TextStyle(color: Colors.white, fontSize: 23.0, letterSpacing: 5.0, fontWeight: FontWeight.normal),
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 23.0,
+                                letterSpacing: 5.0,
+                                fontWeight: FontWeight.normal),
                           ),
                         ]),
                       ),
@@ -89,7 +96,10 @@ class _searchPageState extends State<searchPage> {
                             primary: Color(0xFF2C2E43),
                             onPrimary: Colors.black),
                         onPressed: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => tagPage()));
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => tagPage()));
                         },
                         child: Row(children: <Widget>[
                           Icon(
@@ -101,7 +111,11 @@ class _searchPageState extends State<searchPage> {
                           ),
                           Text(
                             '카테고리별 카페 찾기',
-                            style: TextStyle(color: Colors.white, fontSize: 23.0, letterSpacing: 5.0, fontWeight: FontWeight.normal),
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 23.0,
+                                letterSpacing: 5.0,
+                                fontWeight: FontWeight.normal),
                           ),
                         ]),
                       ),
@@ -118,7 +132,10 @@ class _searchPageState extends State<searchPage> {
                             primary: Color(0xFF2C2E43),
                             onPrimary: Colors.black),
                         onPressed: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => favoritesPage()));
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => favoritesPage()));
                         },
                         child: Row(children: <Widget>[
                           Icon(
@@ -130,7 +147,11 @@ class _searchPageState extends State<searchPage> {
                           ),
                           Text(
                             '즐겨찾는 카페 찾기',
-                            style: TextStyle(color: Colors.white, fontSize: 23.0, letterSpacing: 5.0, fontWeight: FontWeight.normal),
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 23.0,
+                                letterSpacing: 5.0,
+                                fontWeight: FontWeight.normal),
                           ),
                         ]),
                       ),
@@ -153,14 +174,17 @@ Future<void> _openKakaoMapScreen(BuildContext context) async {
   //     util.getKakaoMapURL(37.402056, 127.108212, name: 'Kakao 본사'));
 
   /// This is short form of the above comment
-  String url = await util.getMapScreenURL(37.5515814, 126.9227864, name: '홍익대학교');
+  String url =
+      await util.getMapScreenURL(37.5515814, 126.9227864, name: '홍익대학교');
 
   debugPrint('url : $url');
 
-  Navigator.push(context, MaterialPageRoute(builder: (_) => KakaoMapScreen(url: url)));
+  Navigator.push(
+      context, MaterialPageRoute(builder: (_) => KakaoMapScreen(url: url)));
 }
 
-Widget _testingCustomScript({required Size size, required BuildContext context}) {
+Widget _testingCustomScript(
+    {required Size size, required BuildContext context}) {
   return KakaoMapView(
       width: size.width,
       height: 400,
@@ -195,6 +219,7 @@ Widget _testingCustomScript({required Size size, required BuildContext context})
     
               ''',
       onTapMarker: (message) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message.message)));
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text(message.message)));
       });
 }

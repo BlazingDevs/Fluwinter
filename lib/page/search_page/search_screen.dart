@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:cafegation/page/detail_page/detailPage.dart';
 import 'package:cafegation/services/database.dart';
+
 class SearchScreen extends StatefulWidget {
   _SearchScreenState createState() => _SearchScreenState();
 }
@@ -30,7 +31,7 @@ class _SearchScreenState extends State<SearchScreen> {
     );
   }
 
-  Widget _buildList(BuildContext context, List<DocumentSnapshot> snapshot) {    
+  Widget _buildList(BuildContext context, List<DocumentSnapshot> snapshot) {
     List<DocumentSnapshot> searchResults = [];
     for (DocumentSnapshot d in snapshot) {
       final cafe = DataBaseService.instance.cafeBuilder(d);
@@ -60,6 +61,15 @@ class _SearchScreenState extends State<SearchScreen> {
       //         return detailPage(cafe: cafe);
       //       }));
       // },
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => detailPage(
+                    cafeName: cafe.name,
+                  )),
+        );
+      },
     );
   }
 

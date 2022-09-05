@@ -27,7 +27,7 @@ class _detailPageState extends State<detailPage> {
 
   PreferredSizeWidget _appBarWidget() {
     DocumentReference _documentReference =
-        FirebaseFirestore.instance.collection('cafes').doc(widget.cafeName);
+        FirebaseFirestore.instance.collection('cae').doc(widget.cafeName);
 
     return AppBar(
       elevation: 0,
@@ -82,7 +82,7 @@ class _detailPageState extends State<detailPage> {
     var size = MediaQuery.of(context).size;
 
     DocumentReference _documentReference =
-        FirebaseFirestore.instance.collection('cafes').doc(widget.cafeName);
+        FirebaseFirestore.instance.collection('cae').doc(widget.cafeName);
 
     return StreamBuilder(
       stream: _documentReference.snapshots(),
