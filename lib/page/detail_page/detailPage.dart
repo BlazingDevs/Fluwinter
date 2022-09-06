@@ -118,6 +118,16 @@ class _detailPageState extends State<detailPage> {
         List<dynamic> _tags = snapshot.data!['tags'];
         Map<String, dynamic> _menus = snapshot.data!['menus'];
 
+        var menus = _menus.keys;
+
+        String getLineBreakStrings(Iterable<String> lines) {
+          StringBuffer sb = StringBuffer();
+          for (String line in lines) {
+            sb.write(line + "\n");
+          }
+          return sb.toString();
+        }
+
         return SingleChildScrollView(
           child: Stack(
             children: <Widget>[
@@ -192,15 +202,7 @@ class _detailPageState extends State<detailPage> {
                           borderRadius: BorderRadius.circular(10),
                         ),
                         padding: EdgeInsets.all(7.0),
-                        child: Row(
-                          children: [
-                            for (String menu in _menus.keys)
-                              Text(
-                                "- ${menu} \n",
-                                style: TextStyle(fontSize: 13),
-                              ),
-                          ],
-                        ),
+                        child: Text(getLineBreakStrings(menus)),
                       ),
                       const SizedBox(
                         height: 10.0,
