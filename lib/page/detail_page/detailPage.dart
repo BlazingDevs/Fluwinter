@@ -2,6 +2,7 @@ import 'package:cafegation/constants/colors.dart';
 import 'package:cafegation/page/location_page/locationPage.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cafegation/models/cafe.dart';
 
 class detailPage extends StatefulWidget {
   const detailPage({Key? key, required this.id}) : super(key: key);
@@ -15,13 +16,9 @@ class detailPage extends StatefulWidget {
 class _detailPageState extends State<detailPage> {
   bool _favoriteButtonPressed = false;
 
-  String _images = "대표 사진";
-  String _name = "카페 이름";
-  String _location = "장소";
-  List<dynamic> _tags = ['태그1', '태그2', '태그3'];
-
   PreferredSizeWidget _appBarWidget() {
-    DocumentReference _documentReference = FirebaseFirestore.instance.collection('cae').doc(widget.id);
+    DocumentReference _documentReference =
+        FirebaseFirestore.instance.collection('cae').doc(widget.id);
 
     return AppBar(
       elevation: 0,
@@ -35,7 +32,9 @@ class _detailPageState extends State<detailPage> {
       actions: [
         IconButton(
           icon: Image.asset(
-            _favoriteButtonPressed ? 'assets/heart.png' : 'assets/heart_border.png',
+            _favoriteButtonPressed
+                ? 'assets/heart.png'
+                : 'assets/heart_border.png',
             color: Colors.red[500],
           ),
           onPressed: () {
@@ -59,13 +58,37 @@ class _detailPageState extends State<detailPage> {
     );
   }
 
-  Widget _tagWidget(String tagName) {
+  Widget _tagWidget(int tag) {
+    String tag_string = "태그";
+
+    switch (tag) {
+      case 1:
+        tag_string = "bakery_cafe";
+        break;
+      case 2:
+        tag_string = "brunch_cafe";
+        break;
+      case 3:
+        tag_string = "healing_cafe";
+        break;
+      case 4:
+        tag_string = "instagram_cafe";
+        break;
+      case 5:
+        tag_string = "new_cafe";
+        break;
+      case 6:
+        tag_string = "view_cafe";
+        break;
+    }
+
     return Container(
-      decoration: BoxDecoration(borderRadius: BorderRadius.circular(30), color: kGreyColor),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(30), color: kGreyColor),
       child: Padding(
         padding: const EdgeInsets.all(7.0),
         child: Text(
-          tagName,
+          tag_string,
           style: const TextStyle(fontSize: 11),
         ),
       ),
@@ -75,7 +98,8 @@ class _detailPageState extends State<detailPage> {
   Widget _bodyWidget() {
     var size = MediaQuery.of(context).size;
 
-    DocumentReference _documentReference = FirebaseFirestore.instance.collection('cae').doc(widget.id);
+    DocumentReference _documentReference =
+        FirebaseFirestore.instance.collection('cae').doc(widget.id);
 
     return StreamBuilder(
       stream: _documentReference.snapshots(),
@@ -88,10 +112,11 @@ class _detailPageState extends State<detailPage> {
           return Text("Loading");
         }
 
-        _images = snapshot.data!['images'];
-        _name = snapshot.data!['name'];
-        _location = snapshot.data!['location'];
-        _tags = snapshot.data!['tags'];
+        String _images = snapshot.data!['images'];
+        String _name = snapshot.data!['name'];
+        String _location = snapshot.data!['location'];
+        List<dynamic> _tags = snapshot.data!['tags'];
+        Map<String, dynamic> _menus = snapshot.data!['menus'];
 
         return SingleChildScrollView(
           child: Stack(
@@ -101,13 +126,16 @@ class _detailPageState extends State<detailPage> {
                 width: double.infinity,
                 height: size.height * 0.5,
                 decoration: BoxDecoration(
-                  image: DecorationImage(image: NetworkImage(_images), fit: BoxFit.cover),
+                  image: DecorationImage(
+                      image: NetworkImage(_images), fit: BoxFit.cover),
                 ),
               ),
               Container(
                 margin: EdgeInsets.only(top: size.height * 0.45),
                 width: double.infinity,
-                decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(30)),
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(30)),
                 child: Padding(
                   padding: const EdgeInsets.all(20),
                   child: Column(
@@ -137,17 +165,7 @@ class _detailPageState extends State<detailPage> {
                       ),
                       // 태그
                       Row(
-                        children: [
-                          _tagWidget(_tags[0]),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          _tagWidget(_tags[1]),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          _tagWidget(_tags[2]),
-                        ],
+                        children: [for (int tag in _tags) _tagWidget(tag)],
                       ),
                       const SizedBox(
                         height: 15,
@@ -173,12 +191,15 @@ class _detailPageState extends State<detailPage> {
                           ),
                           borderRadius: BorderRadius.circular(10),
                         ),
-                        child: const Padding(
-                          padding: EdgeInsets.all(7.0),
-                          child: Text(
-                            '- 아메리카노\n- 카페 라떼\n- 바닐라 라뗴\n- 핫초코',
-                            style: TextStyle(fontSize: 13),
-                          ),
+                        padding: EdgeInsets.all(7.0),
+                        child: Row(
+                          children: [
+                            for (String menu in _menus.keys)
+                              Text(
+                                "- ${menu} \n",
+                                style: TextStyle(fontSize: 13),
+                              ),
+                          ],
                         ),
                       ),
                       const SizedBox(
@@ -226,6 +247,9 @@ class _detailPageState extends State<detailPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(extendBodyBehindAppBar: true, appBar: _appBarWidget(), body: _bodyWidget());
+    return Scaffold(
+        extendBodyBehindAppBar: true,
+        appBar: _appBarWidget(),
+        body: _bodyWidget());
   }
 }
