@@ -117,13 +117,14 @@ class _detailPageState extends State<detailPage> {
         String _location = snapshot.data!['location'];
         List<dynamic> _tags = snapshot.data!['tags'];
         Map<String, dynamic> _menus = snapshot.data!['menus'];
+        var _reviews = snapshot.data!['reviews'];
 
         var menus = _menus.keys;
 
-        String getLineBreakStrings(Iterable<String> lines) {
+        String getLineBreakStrings(Iterable<String> keys) {
           StringBuffer sb = StringBuffer();
-          for (String line in lines) {
-            sb.write("- " + line + "\n");
+          for (String key in keys) {
+            sb.write("- ${key} : ${_menus[key]}\n");
           }
           return sb.toString();
         }
@@ -161,11 +162,11 @@ class _detailPageState extends State<detailPage> {
                         ),
                       ),
                       const SizedBox(
-                        height: 10,
+                        height: 5,
                       ),
                       // 카페 위치
                       Text(
-                        _location,
+                        " ${_location}",
                         style: const TextStyle(
                           fontSize: 11,
                         ),
@@ -234,9 +235,11 @@ class _detailPageState extends State<detailPage> {
                         ),
                         child: const Padding(
                           padding: EdgeInsets.all(7.0),
-                          child: Text(
-                            '- 여기 불친절해요\n- 커피 맛집',
-                            style: TextStyle(fontSize: 13),
+                          child: TextField(
+                            decoration: InputDecoration(
+                              border: UnderlineInputBorder(),
+                              labelText: '리뷰를 작성해주세요.',
+                            ),
                           ),
                         ),
                       ),
