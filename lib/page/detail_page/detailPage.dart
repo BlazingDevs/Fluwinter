@@ -123,7 +123,7 @@ class _detailPageState extends State<detailPage> {
         String getLineBreakStrings(Iterable<String> lines) {
           StringBuffer sb = StringBuffer();
           for (String line in lines) {
-            sb.write(line + "\n");
+            sb.write("- " + line + "\n");
           }
           return sb.toString();
         }
@@ -141,11 +141,11 @@ class _detailPageState extends State<detailPage> {
                 ),
               ),
               Container(
-                margin: EdgeInsets.only(top: size.height * 0.45),
+                margin: EdgeInsets.only(top: size.height * 0.35),
                 width: double.infinity,
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(30)),
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                ),
                 child: Padding(
                   padding: const EdgeInsets.all(20),
                   child: Column(
@@ -161,7 +161,7 @@ class _detailPageState extends State<detailPage> {
                         ),
                       ),
                       const SizedBox(
-                        height: 5,
+                        height: 10,
                       ),
                       // 카페 위치
                       Text(
@@ -174,8 +174,12 @@ class _detailPageState extends State<detailPage> {
                         height: 9,
                       ),
                       // 태그
-                      Row(
-                        children: [for (int tag in _tags) _tagWidget(tag)],
+                      Wrap(
+                        spacing: 10,
+                        children: [
+                          SizedBox(width: MediaQuery.of(context).size.width),
+                          for (int tag in _tags) _tagWidget(tag)
+                        ],
                       ),
                       const SizedBox(
                         height: 15,
