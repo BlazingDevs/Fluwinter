@@ -18,8 +18,9 @@ class CafeItem extends StatefulWidget {
 class _CafeItemState extends State<CafeItem> {
   @override
   bool state = false;
-  List lst = [];
+  var lst = [];
   Widget build(BuildContext context) {
+    stateBool(AuthService().user!);
     return ListTile(
         onTap: () {
           Navigator.push(
@@ -39,7 +40,7 @@ class _CafeItemState extends State<CafeItem> {
         title: Text(widget.cafe.name),
         subtitle: Text(widget.cafe.location),
         trailing: IconButton(
-          icon: Icon(stateBool(AuthService().user!) == true ? Icons.favorite : Icons.favorite_border),
+          icon: Icon(state == true ? Icons.favorite : Icons.favorite_border),
           color: Colors.red,
           iconSize: 25.0,
           onPressed: () {
@@ -53,13 +54,16 @@ class _CafeItemState extends State<CafeItem> {
                     .collection('user_data')
                     .doc(FirebaseAuth.instance.currentUser!.uid)
                     .set({"favorites": FieldValue.arrayRemove(list)}, SetOptions(merge: true));
+                Icon(Icons.favorite_border);
               } else {
                 state = true;
                 FirebaseFirestore.instance
                     .collection('user_data')
                     .doc(FirebaseAuth.instance.currentUser!.uid)
                     .set({"favorites": FieldValue.arrayUnion(list)}, SetOptions(merge: true));
+                Icon(Icons.favorite);
               }
+              stateBool(AuthService().user!);
             });
           },
         ));
@@ -82,10 +86,12 @@ class _CafeItemState extends State<CafeItem> {
   Future<List<dynamic>> listMaker() {
     FirebaseAuth user = FirebaseAuth.instance;
     var b;
+
     final a = FirebaseFirestore.instance.collection('user_data').doc(user.currentUser!.uid);
     return a.get().then((value) {
       b = value.data();
       b = b['favorites'];
+      lst = [];
       for (var d in b) {
         d = d['id'];
         lst.add(d.toString());
