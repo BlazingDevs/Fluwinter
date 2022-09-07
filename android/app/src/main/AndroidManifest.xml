@@ -10,8 +10,8 @@
         android:icon="@mipmap/ic_launcher">
 
         <!-- TODO: Add your API key here -->
-       <meta-data android:name="com.google.android.geo.API_KEY"
-           android:value="AIzaSyDpOHTRh0dkxHuR1HH3X979oizAwQXp-Ts"/> // android API Key
+        <meta-data android:name="com.google.android.geo.API_KEY"
+               android:value="${googleMapsApiKey}"/>// android API Key
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -40,7 +40,8 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" 
-            />/>
+            />
+        />
     </application>
 </manifest>
 
