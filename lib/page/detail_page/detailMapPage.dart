@@ -1,4 +1,3 @@
-
 import 'package:cafegation/constants/colors.dart';
 import 'package:cafegation/page/detail_page/detailMapModel.dart';
 import 'package:flutter/cupertino.dart';
@@ -48,7 +47,7 @@ class _MapSampleState extends State<MapSample> {
   }
 
   void setCustomMarker() async {
-    mapMarker = await BitmapDescriptor.fromAssetImage(ImageConfiguration(), 'assets/voramarker.png');
+    mapMarker = await BitmapDescriptor.fromAssetImage(ImageConfiguration(), 'aa/voramarker.png');
   }
 
   var cafe_position_dic = { 
