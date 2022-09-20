@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'dart:math';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:geolocator/geolocator.dart';
 
 void main() {
   runApp(KakaoMapTest());
@@ -35,7 +36,7 @@ class MapSample extends StatefulWidget {
 
 class _MapSampleState extends State<MapSample> {
   Set<Marker> _markers = {};
-
+  Position? _position;
   late BitmapDescriptor mapMarker;
 
   @override
@@ -49,6 +50,13 @@ class _MapSampleState extends State<MapSample> {
      // mapMarker = await BitmapDescriptor.fromAssetImage(ImageConfiguration(), 'assets/voramarker.png');
     mapMarker = await BitmapDescriptor.fromAssetImage(ImageConfiguration(), 'aa/voramarker.png');
   }
+  Future<Position> getCurrentLocation() async {
+    Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+
+    return position;
+  }
+  
 
   var cafe_position_dic = { 
     
@@ -1025,12 +1033,18 @@ class _MapSampleState extends State<MapSample> {
 
 };
   
-
-  void _onMapCreated(GoogleMapController controller) {
+  
+  
+  void _onMapCreated(GoogleMapController controller) async{
+    Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
     setState(() {
+      _position = _position;
+      print(_position!.latitude);
+      print(_position!.longitude);
       _markers.add(
         Marker(
           markerId: MarkerId('ID-1'), 
+          //
           position: LatLng(37.55161117059624, 126.92496705369715),
           icon: mapMarker,
           infoWindow: InfoWindow(
@@ -1068,7 +1082,7 @@ class _MapSampleState extends State<MapSample> {
         onMapCreated: _onMapCreated,
         markers: _markers,
         initialCameraPosition: CameraPosition(
-          target: LatLng(37.55161117059624, 126.92496705369715),
+          target: LatLng(_position!.latitude, _position!.longitude),
           zoom: 18)
         )
     );
