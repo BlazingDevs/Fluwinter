@@ -20,18 +20,16 @@ class _CafeItemState extends State<CafeItem> {
   bool state = false;
   var lst = [];
   Widget build(BuildContext context) {
-    //stateBool(AuthService().user!, state).then((value) => state = value);
-    print(widget.cafe.name);
     final a = listMaker();
-    // state = a.then((value) {
-    //   if (value.contains(widget.cafe.id)) {
-    //     state = true;
-    //   } else {
-    //     state = false;
-    //   }
-    //   return state;
-    // });
-    print(state);
+    a.then((value) {
+      setState(() {
+        if (value.contains(widget.cafe.id)) {
+          state = true;
+        } else {
+          state = false;
+        }
+      });
+    });
     return ListTile(
         onTap: () {
           Navigator.push(
