@@ -12,8 +12,10 @@ class DataBaseService {
   DataBaseService._internal();
 
   //카페 콜렉션
-  final CollectionReference cafeCollection = FirebaseFirestore.instance.collection('cae');
-  final CollectionReference userDataCollection = FirebaseFirestore.instance.collection('user_data');
+  final CollectionReference cafeCollection =
+      FirebaseFirestore.instance.collection('cafes');
+  final CollectionReference userDataCollection =
+      FirebaseFirestore.instance.collection('user_data');
 
   //카페 정보를 업데이트함. (create는 필요 없음. 없으면 firebase에서 만듦.)
   Future updateUserData(String uid, List<String> favorite) async {
@@ -21,9 +23,15 @@ class DataBaseService {
     return await cafeCollection.doc(uid).set({'favorite': favorite});
   }
 
-  Future updateCafeData(String uid, String name, String telephone, String location, double rating) async {
+  Future updateCafeData(String uid, String name, String telephone,
+      String location, double rating) async {
     if (uid.isEmpty) throw NullThrownError();
-    return await cafeCollection.doc(uid).set({'name': name, 'telephone': telephone, 'location': location, 'rating': rating});
+    return await cafeCollection.doc(uid).set({
+      'name': name,
+      'telephone': telephone,
+      'location': location,
+      'rating': rating
+    });
   }
 
   List<String> nonNullableList(DocumentSnapshot doc, String name) {
@@ -34,25 +42,16 @@ class DataBaseService {
     }
   }
 
-  List<int> nonNullableListfromInt(DocumentSnapshot doc, String name) {
-    try {
-      return List.from(doc[name]);
-    } catch (e) {
-      return const [];
-    }
-  }
-
   Cafe cafeBuilder(DocumentSnapshot doc) {
     return Cafe(
-      id: doc.id,
       name: doc['name'],
       telephone: doc['telephone'],
       location: doc['location'],
       rating: doc['rating'],
-      images: doc['images'],
+      images: nonNullableList(doc, 'images'),
       reviews: nonNullableList(doc, 'reviews'),
       menus: nonNullableList(doc, 'menus'),
-      tags: nonNullableListfromInt(doc, 'tags'),
+      tags: nonNullableList(doc, 'tags'),
     );
   }
 
