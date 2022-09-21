@@ -20,7 +20,18 @@ class _CafeItemState extends State<CafeItem> {
   bool state = false;
   var lst = [];
   Widget build(BuildContext context) {
-    stateBool(AuthService().user!);
+    //stateBool(AuthService().user!, state).then((value) => state = value);
+    print(widget.cafe.name);
+    final a = listMaker();
+    // state = a.then((value) {
+    //   if (value.contains(widget.cafe.id)) {
+    //     state = true;
+    //   } else {
+    //     state = false;
+    //   }
+    //   return state;
+    // });
+    print(state);
     return ListTile(
         onTap: () {
           Navigator.push(
@@ -32,11 +43,12 @@ class _CafeItemState extends State<CafeItem> {
           );
         },
         leading: ClipRRect(
-          borderRadius: BorderRadius.all(Radius.circular(10.0)),
-          child: Image(
-            image: NetworkImage(widget.cafe.images, scale: 3.0),
-          ),
-        ),
+            borderRadius: BorderRadius.circular(10.0),
+            child: Image.network(
+              widget.cafe.images,
+              width: 80,
+              height: 100,
+            )),
         title: Text(widget.cafe.name),
         subtitle: Text(widget.cafe.location),
         trailing: IconButton(
@@ -63,18 +75,16 @@ class _CafeItemState extends State<CafeItem> {
                     .set({"favorites": FieldValue.arrayUnion(list)}, SetOptions(merge: true));
                 Icon(Icons.favorite);
               }
-              stateBool(AuthService().user!);
+              stateBool(AuthService().user!, state);
             });
           },
         ));
   }
 
-  Future<bool> stateBool(MyUser user) {
+  Future<bool> stateBool(MyUser user, bool state) {
     final a = listMaker();
     return a.then((value) {
-      print(value);
       if (value.contains(widget.cafe.id)) {
-        print('true');
         state = true;
       } else {
         state = false;
@@ -98,11 +108,5 @@ class _CafeItemState extends State<CafeItem> {
       }
       return lst;
     });
-    // print('next');
-    // print(lst);
-    // for (String t in lst) {
-    //   print(t);
-    // }
-    // return c;
   }
 }

@@ -15,6 +15,7 @@ class _CafeListState extends State<CafeList> {
   Widget build(BuildContext context) {
     final cafes = Provider.of<List<Cafe>>(context);
     return ListView.builder(
+      itemExtent: 80.0,
       itemCount: cafes.length,
       itemBuilder: (context, index) {
         return CafeItem(cafe: cafes[index]);
