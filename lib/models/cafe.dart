@@ -1,23 +1,13 @@
-class Cafe {
-  final String id;
+class Cafe{
   final String name;
   final String telephone;
   final String location;
-  final String rating;
+  final num rating;
   //Can Be Null
-  final String images;
+  final List<String>? images;
   final List<String>? reviews;
-  final List<int>? tags;
+  final List<String>? tags;
   final List<String>? menus;
 
-  const Cafe(
-      {this.id = '',
-      this.name = '',
-      this.telephone = '',
-      this.location = '',
-      this.rating = '',
-      this.images = '',
-      this.reviews = const [],
-      this.tags = const [],
-      this.menus = const []});
+  const Cafe({ this.name = '', this.telephone = '', this.location  = '', this.rating = 0, this.images = const [], this.reviews = const [], this.tags = const [], this.menus = const [] });
 }
