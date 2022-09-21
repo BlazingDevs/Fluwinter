@@ -1,6 +1,7 @@
 import 'package:cafegation/models/myuser.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cafegation/models/cafe.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class DataBaseService {
   //쓰기를 할때 firebase가 발급한 UID를 이용하도록 함.
@@ -76,9 +77,20 @@ class DataBaseService {
     return cafeCollection.snapshots().map(_cafeListFromSnapShot);
   }
 
-  Future<List<String>> userFavorite(String uid) async {
-    DocumentSnapshot docSnapshot = await userDataCollection.doc(uid).get();
-    //Map<String, dynamic>? data = docSnapshot.data() as Map<String, dynamic>?;
-    return List.from(docSnapshot['favorites']);
+  Future<List<dynamic>> userFavorite(String uid) async {
+    FirebaseAuth user = FirebaseAuth.instance;
+    var b;
+    List<dynamic> lst = [];
+    final a = FirebaseFirestore.instance.collection('user_data').doc(user.currentUser!.uid);
+    return a.get().then((value) {
+      b = value.data();
+      b = b['favorites'];
+      lst = [];
+      for (var d in b) {
+        d = d['id'];
+        lst.add(d.toString());
+      }
+      return lst;
+    });
   }
 }

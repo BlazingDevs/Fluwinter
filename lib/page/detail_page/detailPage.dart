@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class detailPage extends StatefulWidget {
-  const detailPage({Key? key, required this.cafeName}) : super(key: key);
+  const detailPage({Key? key, required this.cafeName, required this.likedStatus}) : super(key: key);
 
   final String cafeName;
-
+  final bool likedStatus;
   @override
   _detailPageState createState() => _detailPageState();
 }
