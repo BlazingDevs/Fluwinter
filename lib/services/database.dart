@@ -57,10 +57,36 @@ class DataBaseService {
     );
   }
 
-  List<Cafe> _cafeListFromSnapShot(QuerySnapshot querySnapshot) {
-    return querySnapshot.docs.map((doc) {
-      return cafeBuilder(doc);
-    }).toList();
+  Future<List<Cafe>> cafeListFromSnapShot(int i) async {
+    List<Cafe> lst = [];
+    String docName = 'bakery_cafe';
+    if (i == 1) {
+      docName = 'bakery_cafe';
+    } else if (i == 2) {
+      docName = 'brunch_cafe';
+    } else if (i == 3) {
+      docName = 'healing_cafe';
+    } else if (i == 4) {
+      docName = 'instagram_cafe';
+    } else if (i == 5) {
+      docName = 'new_cafe';
+    } else if (i == 6) {
+      docName = 'view_cafe';
+    }
+
+    DocumentSnapshot<Map<String, dynamic>> a = await FirebaseFirestore.instance.collection('tags').doc(docName).get();
+    var document = await cafeCollection.get();
+    for (var cafe_name in a.data()!.values) {
+      for (QueryDocumentSnapshot doc in document.docs) {
+        if (doc['name'] == cafe_name) {
+          lst.add(cafeBuilder(doc));
+          break;
+        }
+      }
+    }
+    //for (String cafe_id in ab) {}
+    return lst;
+    //중첩이문제인듯.
   }
 
   Future<List<Cafe>> favoriteCafes(MyUser user) async {
@@ -74,9 +100,9 @@ class DataBaseService {
   }
 
   // 카페 스트림을 가져옴
-  Stream<List<Cafe>> get cafes {
-    return cafeCollection.snapshots().map(_cafeListFromSnapShot);
-  }
+  // Stream<List<Cafe>> get cafes {
+  //   return cafeCollection.snapshots().map(_cafeListFromSnapShot);
+  // }
 
   Future<List<dynamic>> userFavorite(String uid) async {
     FirebaseAuth user = FirebaseAuth.instance;
