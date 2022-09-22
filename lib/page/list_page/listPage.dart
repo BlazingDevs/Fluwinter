@@ -9,7 +9,8 @@ import 'package:cafegation/services/auth.dart';
 import 'package:cafegation/services/database.dart';
 
 class listPage extends StatefulWidget {
-  const listPage({Key? key}) : super(key: key);
+  final tagCode;
+  const listPage({Key? key, required this.tagCode}) : super(key: key);
 
   @override
   _listPageState createState() => _listPageState();
@@ -18,8 +19,8 @@ class listPage extends StatefulWidget {
 class _listPageState extends State<listPage> {
   @override
   Widget build(BuildContext context) {
-    return StreamProvider<List<Cafe>>.value(
-        value: DataBaseService().cafes,
+    return FutureProvider<List<Cafe>>.value(
+        value: DataBaseService().cafeListFromSnapShot(widget.tagCode),
         initialData: [],
         child: Scaffold(
             appBar: AppBar(
