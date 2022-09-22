@@ -1,69 +1,69 @@
+import 'package:cafegation/page/detail_page/detailPage.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cafegation/models/cafe.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:transparent_image/transparent_image.dart';
 
-class FavoriteCafeItem extends StatelessWidget {
+class FavoriteCafeItem extends StatefulWidget {
   final Cafe cafe;
-  final int index;
   final bool hideFavorite;
+  final int index;
+  const FavoriteCafeItem({Key? key, required this.hideFavorite, required this.cafe, required this.index}) : super(key: key);
 
-  const FavoriteCafeItem({required this.cafe, required this.index, required this.hideFavorite, Key? key}) : super(key: key);
-
-  //TODO : There is actually no 'favorite' function here, which is a problem.
   @override
+  State<FavoriteCafeItem> createState() => _FavoriteCafeItemState();
+}
+
+class _FavoriteCafeItemState extends State<FavoriteCafeItem> {
+  @override
+  bool state = true;
   Widget build(BuildContext context) {
-    return Container(
-      alignment: Alignment.center,
-      color: Colors.grey[200 + index % 4 * 100],
-      height: 100,
-      child: Row(
-        children: <Widget>[
-          hideFavorite
-              ? Container()
-              : SizedBox(
-                  width: 60,
-                  child: ImageIcon(
-                    const AssetImage('assets/heart.png'),
-                    color: Colors.red[500],
-                  ),
-                ),
-          Padding(padding: const EdgeInsets.all(8.0), child: FadeInImage.memoryNetwork(placeholder: kTransparentImage, image: cafe.images)),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  cafe.name,
-                  style: const TextStyle(
-                    fontSize: 20,
-                  ),
-                ),
-                Text(
-                  cafe.location,
-                  style: TextStyle(fontSize: 15, color: Colors.grey[500]),
-                ),
-                Row(
-                  children: [
-                    Text(cafe.rating),
-                    RatingBarIndicator(
-                      rating: double.parse(cafe.rating),
-                      direction: Axis.horizontal,
-                      itemCount: 5,
-                      itemSize: 20.0,
-                      itemPadding: const EdgeInsets.symmetric(horizontal: 1.0),
-                      itemBuilder: (context, _) => const Icon(
-                        Icons.star,
-                        color: Colors.amber,
-                      ),
-                    )
-                  ],
-                )
-              ],
-            ),
-          )
-        ],
+    return ListTile(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => detailPage(
+                    cafeName: widget.cafe.id,
+                    likedStatus: true,
+                  )),
+        );
+      },
+      leading: ClipRRect(
+          borderRadius: BorderRadius.circular(10.0),
+          child: Image.network(
+            widget.cafe.images,
+            width: 80,
+            height: 100,
+          )),
+      title: Text(widget.cafe.name),
+      subtitle: Text(widget.cafe.location),
+      trailing: IconButton(
+        icon: Icon(state ? Icons.favorite : Icons.favorite_border),
+        color: Colors.red,
+        iconSize: 25.0,
+        onPressed: () {
+          setState(() {
+            var list = [
+              {"id": widget.cafe.id, "tag": widget.cafe.tags}
+            ];
+            if (state == true) {
+              state = false;
+              FirebaseFirestore.instance
+                  .collection('user_data')
+                  .doc(FirebaseAuth.instance.currentUser!.uid)
+                  .set({"favorites": FieldValue.arrayRemove(list)}, SetOptions(merge: true));
+            } else {
+              state = true;
+              FirebaseFirestore.instance
+                  .collection('user_data')
+                  .doc(FirebaseAuth.instance.currentUser!.uid)
+                  .set({"favorites": FieldValue.arrayUnion(list)}, SetOptions(merge: true));
+            }
+          });
+        },
       ),
     );
   }
