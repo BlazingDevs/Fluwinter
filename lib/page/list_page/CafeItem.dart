@@ -65,14 +65,12 @@ class _CafeItemState extends State<CafeItem> {
                     .collection('user_data')
                     .doc(FirebaseAuth.instance.currentUser!.uid)
                     .set({"favorites": FieldValue.arrayRemove(list)}, SetOptions(merge: true));
-                Icon(Icons.favorite_border);
               } else {
                 state = true;
                 FirebaseFirestore.instance
                     .collection('user_data')
                     .doc(FirebaseAuth.instance.currentUser!.uid)
                     .set({"favorites": FieldValue.arrayUnion(list)}, SetOptions(merge: true));
-                Icon(Icons.favorite);
               }
               stateBool(AuthService().user!, state);
             });
