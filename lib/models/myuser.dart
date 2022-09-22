@@ -9,4 +9,9 @@ class MyUser{
     Future<List<dynamic>> fUser = DataBaseService().userFavorite(uid);
     fUser.then((value) => {favorite = value});
   }
+  List<dynamic>? getUpdatedList() {
+    Future<List<dynamic>> fUser = DataBaseService().userFavorite(uid);
+    fUser.then((value) => {favorite = value});
+    return favorite;
+  }
 }
