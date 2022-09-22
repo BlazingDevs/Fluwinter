@@ -66,7 +66,7 @@ class DataBaseService {
   Future<List<Cafe>> favoriteCafes(MyUser user) async {
     if (user.favorite == null) return [];
     List<Cafe> favoriteCafes = [];
-    for (String cafe_id in user.favorite!) {
+    for (String cafe_id in user.getUpdatedList()!) {
       var document = await cafeCollection.doc(cafe_id).get();
       favoriteCafes.add(cafeBuilder(document));
     }
@@ -82,7 +82,7 @@ class DataBaseService {
     FirebaseAuth user = FirebaseAuth.instance;
     var b;
     List<dynamic> lst = [];
-    final a = FirebaseFirestore.instance.collection('user_data').doc(user.currentUser!.uid);
+    DocumentReference a = FirebaseFirestore.instance.collection('user_data').doc(user.currentUser!.uid);
     return a.get().then((value) {
       b = value.data();
       b = b['favorites'];
