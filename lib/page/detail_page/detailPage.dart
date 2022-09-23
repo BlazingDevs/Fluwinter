@@ -107,7 +107,7 @@ class _detailPageState extends State<detailPage> {
     var size = MediaQuery.of(context).size;
 
     DocumentReference _documentReference =
-        FirebaseFirestore.instance.collection('cafe').doc(widget.cafeName);
+        FirebaseFirestore.instance.collection('cae').doc(widget.cafeName);
 
     return StreamBuilder(
       stream: _documentReference.snapshots(),
@@ -120,14 +120,14 @@ class _detailPageState extends State<detailPage> {
           return Text("Loading");
         }
 
-        _xcoordinate = snapshot.data!['coordinates'][0];
-        _ycoordinate = snapshot.data!['coordinates'][1];
+        _xcoordinate = snapshot.data!['coordinate'][0];
+        _ycoordinate = snapshot.data!['coordinate'][1];
         String _images = snapshot.data!['images'];
         String _name = snapshot.data!['name'];
         String _location = snapshot.data!['location'];
         List<dynamic> _tags = snapshot.data!['tags'];
         Map<String, dynamic> _menus = snapshot.data!['menus'];
-        var _reviews = snapshot.data!['reviews'];
+        // var _reviews = snapshot.data!['reviews'];
 
         var menus = _menus.keys;
 
