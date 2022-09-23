@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:cafegation/page/detail_page/detailPage.dart';
 import 'package:cafegation/services/database.dart';
 import 'package:cafegation/page/list_page/CafeItem.dart';
+import 'package:cafegation/services/auth.dart';
 
 class SearchScreen extends StatefulWidget {
   _SearchScreenState createState() => _SearchScreenState();
@@ -53,7 +54,7 @@ class _SearchScreenState extends State<SearchScreen> {
 
   Widget _buildListItem(BuildContext context, DocumentSnapshot data) {
     final cafe = DataBaseService.instance.cafeBuilder(data);
-    
+    final state = false;
 
     return InkWell(
       child: Image.network(cafe.images),
@@ -69,8 +70,8 @@ class _SearchScreenState extends State<SearchScreen> {
           context,
           MaterialPageRoute(
               builder: (context) => detailPage(
-                    cafeName: cafe.name,
-                    likedStatus: cafe.
+                    cafeName: cafe.id,
+                    likedStatus: state,
                   )),
         );
       },
