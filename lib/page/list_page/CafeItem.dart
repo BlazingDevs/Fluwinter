@@ -64,13 +64,15 @@ class _CafeItemState extends State<CafeItem> {
                 FirebaseFirestore.instance
                     .collection('user_data')
                     .doc(FirebaseAuth.instance.currentUser!.uid)
-                    .set({"favorites": FieldValue.arrayRemove(list)}, SetOptions(merge: true));
+                    .set({"favorites": FieldValue.arrayRemove(list)},
+                        SetOptions(merge: true));
               } else {
                 state = true;
                 FirebaseFirestore.instance
                     .collection('user_data')
                     .doc(FirebaseAuth.instance.currentUser!.uid)
-                    .set({"favorites": FieldValue.arrayUnion(list)}, SetOptions(merge: true));
+                    .set({"favorites": FieldValue.arrayUnion(list)},
+                        SetOptions(merge: true));
               }
               stateBool(AuthService().user!, state);
             });
@@ -94,7 +96,9 @@ class _CafeItemState extends State<CafeItem> {
     FirebaseAuth user = FirebaseAuth.instance;
     var b;
 
-    final a = FirebaseFirestore.instance.collection('user_data').doc(user.currentUser!.uid);
+    final a = FirebaseFirestore.instance
+        .collection('user_data')
+        .doc(user.currentUser!.uid);
     return a.get().then((value) {
       b = value.data();
       b = b['favorites'];
