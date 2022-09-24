@@ -17,8 +17,6 @@ class detailPage extends StatefulWidget {
 }
 
 class _detailPageState extends State<detailPage> {
-  bool _favoriteButtonPressed = false;
-
   // List<double> _allcoordinate = [0.0001,0.0001];
   double _xcoordinate = 0.00000001;
   double _ycoordinate = 0.00000001;
@@ -26,6 +24,8 @@ class _detailPageState extends State<detailPage> {
   PreferredSizeWidget _appBarWidget() {
     DocumentReference _documentReference =
         FirebaseFirestore.instance.collection('cae').doc(widget.cafeName);
+
+    bool _favoriteButtonPressed = widget.likedStatus;
 
     return AppBar(
       elevation: 0,
@@ -38,12 +38,11 @@ class _detailPageState extends State<detailPage> {
       backgroundColor: Colors.transparent,
       actions: [
         IconButton(
-          icon: Image.asset(
-            _favoriteButtonPressed
-                ? 'assets/heart.png'
-                : 'assets/heart_border.png',
-            color: Colors.red[500],
+          icon: Icon(
+            _favoriteButtonPressed ? Icons.favorite : Icons.favorite_border,
           ),
+          color: Colors.red,
+          iconSize: 25.0,
           onPressed: () {
             setState(() {
               _favoriteButtonPressed = !_favoriteButtonPressed;
@@ -154,9 +153,9 @@ class _detailPageState extends State<detailPage> {
               Container(
                 margin: EdgeInsets.only(top: size.height * 0.35),
                 width: double.infinity,
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(30)),
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                ),
                 child: Padding(
                   padding: const EdgeInsets.all(20),
                   child: Column(
