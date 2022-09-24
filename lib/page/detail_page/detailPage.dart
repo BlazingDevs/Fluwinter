@@ -6,7 +6,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cafegation/models/cafe.dart';
 
 class detailPage extends StatefulWidget {
-  const detailPage({Key? key, required this.cafeName, required this.likedStatus}) : super(key: key);
+  const detailPage(
+      {Key? key, required this.cafeName, required this.likedStatus})
+      : super(key: key);
 
   final String cafeName;
   final bool likedStatus;
@@ -17,10 +19,6 @@ class detailPage extends StatefulWidget {
 class _detailPageState extends State<detailPage> {
   bool _favoriteButtonPressed = false;
 
-  String _images = "대표 사진";
-  String _name = "카페 이름";
-  String _location = "장소";
-  List<dynamic> _tags = ['태그1', '태그2', '태그3'];
   // List<double> _allcoordinate = [0.0001,0.0001];
   double _xcoordinate = 0.00000001;
   double _ycoordinate = 0.00000001;
@@ -57,21 +55,48 @@ class _detailPageState extends State<detailPage> {
         IconButton(
           icon: const Icon(Icons.location_pin),
           onPressed: () {
-            Navigator.of(context).push(MaterialPageRoute(builder: (context)=> detailMapPage(xcoordinate: _xcoordinate,ycoordinate: _ycoordinate,)));
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => detailMapPage(
+                      xcoordinate: _xcoordinate,
+                      ycoordinate: _ycoordinate,
+                    )));
           },
         ),
       ],
     );
   }
 
-  Widget _tagWidget(String tagName) {
+  Widget _tagWidget(int tag) {
+    String tag_string = "태그";
+
+    switch (tag) {
+      case 1:
+        tag_string = "bakery_cafe";
+        break;
+      case 2:
+        tag_string = "brunch_cafe";
+        break;
+      case 3:
+        tag_string = "healing_cafe";
+        break;
+      case 4:
+        tag_string = "instagram_cafe";
+        break;
+      case 5:
+        tag_string = "new_cafe";
+        break;
+      case 6:
+        tag_string = "view_cafe";
+        break;
+    }
+
     return Container(
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30), color: kGreyColor),
       child: Padding(
         padding: const EdgeInsets.all(7.0),
         child: Text(
-          tagName,
+          tag_string,
           style: const TextStyle(fontSize: 11),
         ),
       ),
@@ -95,12 +120,24 @@ class _detailPageState extends State<detailPage> {
           return Text("Loading");
         }
 
-        _images = snapshot.data!['images'];
-        _name = snapshot.data!['name'];
-        _location = snapshot.data!['location'];
-        _tags = snapshot.data!['tags'];
-        _xcoordinate = snapshot.data!['coordinates'][0];
-        _ycoordinate = snapshot.data!['coordinates'][1];
+        _xcoordinate = snapshot.data!['coordinate'][0];
+        _ycoordinate = snapshot.data!['coordinate'][1];
+        String _images = snapshot.data!['images'];
+        String _name = snapshot.data!['name'];
+        String _location = snapshot.data!['location'];
+        List<dynamic> _tags = snapshot.data!['tags'];
+        Map<String, dynamic> _menus = snapshot.data!['menus'];
+        // var _reviews = snapshot.data!['reviews'];
+
+        var menus = _menus.keys;
+
+        String getLineBreakStrings(Iterable<String> keys) {
+          StringBuffer sb = StringBuffer();
+          for (String key in keys) {
+            sb.write("- ${key} : ${_menus[key]}\n");
+          }
+          return sb.toString();
+        }
 
         return SingleChildScrollView(
           child: Stack(
@@ -115,7 +152,7 @@ class _detailPageState extends State<detailPage> {
                 ),
               ),
               Container(
-                margin: EdgeInsets.only(top: size.height * 0.45),
+                margin: EdgeInsets.only(top: size.height * 0.35),
                 width: double.infinity,
                 decoration: BoxDecoration(
                     color: Colors.white,
@@ -139,7 +176,7 @@ class _detailPageState extends State<detailPage> {
                       ),
                       // 카페 위치
                       Text(
-                        _location,
+                        " ${_location}",
                         style: const TextStyle(
                           fontSize: 11,
                         ),
@@ -148,17 +185,11 @@ class _detailPageState extends State<detailPage> {
                         height: 9,
                       ),
                       // 태그
-                      Row(
+                      Wrap(
+                        spacing: 10,
                         children: [
-                          _tagWidget(_tags[0]),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          _tagWidget(_tags[1]),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          _tagWidget(_tags[2]),
+                          SizedBox(width: MediaQuery.of(context).size.width),
+                          for (int tag in _tags) _tagWidget(tag)
                         ],
                       ),
                       const SizedBox(
@@ -185,13 +216,8 @@ class _detailPageState extends State<detailPage> {
                           ),
                           borderRadius: BorderRadius.circular(10),
                         ),
-                        child: const Padding(
-                          padding: EdgeInsets.all(7.0),
-                          child: Text(
-                            '- 아메리카노\n- 카페 라떼\n- 바닐라 라뗴\n- 핫초코',
-                            style: TextStyle(fontSize: 13),
-                          ),
-                        ),
+                        padding: EdgeInsets.all(7.0),
+                        child: Text(getLineBreakStrings(menus)),
                       ),
                       const SizedBox(
                         height: 10.0,
@@ -219,9 +245,11 @@ class _detailPageState extends State<detailPage> {
                         ),
                         child: const Padding(
                           padding: EdgeInsets.all(7.0),
-                          child: Text(
-                            '- 여기 불친절해요\n- 커피 맛집',
-                            style: TextStyle(fontSize: 13),
+                          child: TextField(
+                            decoration: InputDecoration(
+                              border: UnderlineInputBorder(),
+                              labelText: '리뷰를 작성해주세요.',
+                            ),
                           ),
                         ),
                       ),
