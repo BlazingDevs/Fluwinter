@@ -76,7 +76,7 @@ class _detailPageState extends State<detailPage> {
         String _location = snapshot.data!['location'];
         List<dynamic> _tags = snapshot.data!['tags'];
         Map<String, dynamic> _menus = snapshot.data!['menus'];
-        List<dynamic> _reviews = snapshot.data!['views'];
+        List<dynamic> _reviews = snapshot.data!['reviews'];
 
         var menus = _menus.keys;
 
