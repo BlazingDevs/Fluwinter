@@ -147,7 +147,11 @@ class _detailPageState extends State<detailPage> {
 
         String getLineBreakStrings(Iterable<String> keys) {
           StringBuffer sb = StringBuffer();
+          var count = 0;
+
           for (String key in keys) {
+            if (count >= 8) break;
+            count++;
             sb.write("- ${key} : ${_menus[key]}\n");
           }
           return sb.toString();
