@@ -17,76 +17,27 @@ class detailPage extends StatefulWidget {
 }
 
 class _detailPageState extends State<detailPage> {
-  bool _favoriteButtonPressed = false;
-
-  // List<double> _allcoordinate = [0.0001,0.0001];
-  double _xcoordinate = 0.00000001;
-  double _ycoordinate = 0.00000001;
-
-  PreferredSizeWidget _appBarWidget() {
-    DocumentReference _documentReference =
-        FirebaseFirestore.instance.collection('cae').doc(widget.cafeName);
-
-    return AppBar(
-      elevation: 0,
-      leading: IconButton(
-        icon: const Icon(Icons.arrow_back),
-        onPressed: () {
-          Navigator.pop(context);
-        },
-      ),
-      backgroundColor: Colors.transparent,
-      actions: [
-        IconButton(
-          icon: Image.asset(
-            _favoriteButtonPressed
-                ? 'assets/heart.png'
-                : 'assets/heart_border.png',
-            color: Colors.red[500],
-          ),
-          onPressed: () {
-            setState(() {
-              _favoriteButtonPressed = !_favoriteButtonPressed;
-              _documentReference.update({'favorite': _favoriteButtonPressed});
-            });
-            ;
-          },
-        ),
-        IconButton(
-          icon: const Icon(Icons.location_pin),
-          onPressed: () {
-            Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => detailMapPage(
-                      xcoordinate: _xcoordinate,
-                      ycoordinate: _ycoordinate,
-                    )));
-          },
-        ),
-      ],
-    );
-  }
-
   Widget _tagWidget(int tag) {
-    String tag_string = "태그";
+    String tagString = "태그";
 
     switch (tag) {
       case 1:
-        tag_string = "bakery_cafe";
+        tagString = "bakery_cafe";
         break;
       case 2:
-        tag_string = "brunch_cafe";
+        tagString = "brunch_cafe";
         break;
       case 3:
-        tag_string = "healing_cafe";
+        tagString = "healing_cafe";
         break;
       case 4:
-        tag_string = "instagram_cafe";
+        tagString = "instagram_cafe";
         break;
       case 5:
-        tag_string = "new_cafe";
+        tagString = "new_cafe";
         break;
       case 6:
-        tag_string = "view_cafe";
+        tagString = "view_cafe";
         break;
     }
 
@@ -96,7 +47,7 @@ class _detailPageState extends State<detailPage> {
       child: Padding(
         padding: const EdgeInsets.all(7.0),
         child: Text(
-          tag_string,
+          tagString,
           style: const TextStyle(fontSize: 11),
         ),
       ),
@@ -113,28 +64,38 @@ class _detailPageState extends State<detailPage> {
       stream: _documentReference.snapshots(),
       builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
         if (snapshot.hasError) {
-          return Text('Something went wrong');
+          return const Text('Something went wrong');
         }
 
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Text("Loading");
+          return const Text("Loading");
         }
 
-        _xcoordinate = snapshot.data!['coordinate'][0];
-        _ycoordinate = snapshot.data!['coordinate'][1];
         String _images = snapshot.data!['images'];
         String _name = snapshot.data!['name'];
         String _location = snapshot.data!['location'];
         List<dynamic> _tags = snapshot.data!['tags'];
         Map<String, dynamic> _menus = snapshot.data!['menus'];
-        // var _reviews = snapshot.data!['reviews'];
+        List<dynamic> _reviews = snapshot.data!['reviews'];
 
         var menus = _menus.keys;
 
         String getLineBreakStrings(Iterable<String> keys) {
           StringBuffer sb = StringBuffer();
+          var count = 0;
+
           for (String key in keys) {
+            if (count >= 8) break;
+            count++;
             sb.write("- ${key} : ${_menus[key]}\n");
+          }
+          return sb.toString();
+        }
+
+        String getReviewList(List<dynamic> _reviews) {
+          StringBuffer sb = StringBuffer();
+          for (String review in _reviews) {
+            sb.write("- ${review}\n");
           }
           return sb.toString();
         }
@@ -154,9 +115,9 @@ class _detailPageState extends State<detailPage> {
               Container(
                 margin: EdgeInsets.only(top: size.height * 0.35),
                 width: double.infinity,
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(30)),
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                ),
                 child: Padding(
                   padding: const EdgeInsets.all(20),
                   child: Column(
@@ -216,7 +177,7 @@ class _detailPageState extends State<detailPage> {
                           ),
                           borderRadius: BorderRadius.circular(10),
                         ),
-                        padding: EdgeInsets.all(7.0),
+                        padding: const EdgeInsets.all(7.0),
                         child: Text(getLineBreakStrings(menus)),
                       ),
                       const SizedBox(
@@ -243,15 +204,21 @@ class _detailPageState extends State<detailPage> {
                           ),
                           borderRadius: BorderRadius.circular(10),
                         ),
-                        child: const Padding(
-                          padding: EdgeInsets.all(7.0),
-                          child: TextField(
-                            decoration: InputDecoration(
-                              border: UnderlineInputBorder(),
-                              labelText: '리뷰를 작성해주세요.',
+                        child: Padding(
+                            padding: const EdgeInsets.all(7.0),
+                            child: Text(getReviewList(_reviews))
+                            // TextField(
+                            //   keyboardType: TextInputType.text,
+                            //   textAlign: TextAlign.left,
+                            //   onChanged: (value) {
+                            //     review = value;
+                            //   },
+                            //   decoration: const InputDecoration(
+                            //     border: UnderlineInputBorder(),
+                            //     labelText: '리뷰를 작성해주세요.',
+                            //   ),
+                            // ),
                             ),
-                          ),
-                        ),
                       ),
                     ],
                   ),
@@ -268,7 +235,65 @@ class _detailPageState extends State<detailPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         extendBodyBehindAppBar: true,
-        appBar: _appBarWidget(),
+        appBar: PreferredSize(
+            preferredSize: const Size(double.infinity, kToolbarHeight),
+            child: StreamBuilder<DocumentSnapshot>(
+              stream: FirebaseFirestore.instance
+                  .collection('cae')
+                  .doc(widget.cafeName)
+                  .snapshots(),
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                  return const Text('Something went wrong');
+                }
+
+                bool _favoriteButtonPressed = snapshot.data!['favorite'];
+                double _xcoordinate = snapshot.data!['coordinate'][0];
+                double _ycoordinate = snapshot.data!['coordinate'][1];
+
+                return AppBar(
+                  elevation: 0,
+                  leading: IconButton(
+                    icon: const Icon(Icons.arrow_back),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                  backgroundColor: Colors.transparent,
+                  actions: [
+                    IconButton(
+                      icon: Icon(
+                        _favoriteButtonPressed
+                            ? Icons.favorite
+                            : Icons.favorite_border,
+                      ),
+                      color: Colors.red,
+                      iconSize: 25.0,
+                      onPressed: () {
+                        setState(() {
+                          _favoriteButtonPressed = !_favoriteButtonPressed;
+                          FirebaseFirestore.instance
+                              .collection('cae')
+                              .doc(widget.cafeName)
+                              .update({'favorite': _favoriteButtonPressed});
+                        });
+                        ;
+                      },
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.location_pin),
+                      onPressed: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => detailMapPage(
+                                  xcoordinate: _xcoordinate,
+                                  ycoordinate: _ycoordinate,
+                                )));
+                      },
+                    ),
+                  ],
+                );
+              },
+            )),
         body: _bodyWidget());
   }
 }
