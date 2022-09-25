@@ -18,26 +18,26 @@ class detailPage extends StatefulWidget {
 
 class _detailPageState extends State<detailPage> {
   Widget _tagWidget(int tag) {
-    String tag_string = "태그";
+    String tagString = "태그";
 
     switch (tag) {
       case 1:
-        tag_string = "bakery_cafe";
+        tagString = "bakery_cafe";
         break;
       case 2:
-        tag_string = "brunch_cafe";
+        tagString = "brunch_cafe";
         break;
       case 3:
-        tag_string = "healing_cafe";
+        tagString = "healing_cafe";
         break;
       case 4:
-        tag_string = "instagram_cafe";
+        tagString = "instagram_cafe";
         break;
       case 5:
-        tag_string = "new_cafe";
+        tagString = "new_cafe";
         break;
       case 6:
-        tag_string = "view_cafe";
+        tagString = "view_cafe";
         break;
     }
 
@@ -47,7 +47,7 @@ class _detailPageState extends State<detailPage> {
       child: Padding(
         padding: const EdgeInsets.all(7.0),
         child: Text(
-          tag_string,
+          tagString,
           style: const TextStyle(fontSize: 11),
         ),
       ),
@@ -56,7 +56,6 @@ class _detailPageState extends State<detailPage> {
 
   Widget _bodyWidget() {
     var size = MediaQuery.of(context).size;
-    String review = '';
 
     DocumentReference _documentReference =
         FirebaseFirestore.instance.collection('cae').doc(widget.cafeName);
@@ -65,11 +64,11 @@ class _detailPageState extends State<detailPage> {
       stream: _documentReference.snapshots(),
       builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
         if (snapshot.hasError) {
-          return Text('Something went wrong');
+          return const Text('Something went wrong');
         }
 
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Text("Loading");
+          return const Text("Loading");
         }
 
         String _images = snapshot.data!['images'];
@@ -178,7 +177,7 @@ class _detailPageState extends State<detailPage> {
                           ),
                           borderRadius: BorderRadius.circular(10),
                         ),
-                        padding: EdgeInsets.all(7.0),
+                        padding: const EdgeInsets.all(7.0),
                         child: Text(getLineBreakStrings(menus)),
                       ),
                       const SizedBox(
@@ -206,7 +205,7 @@ class _detailPageState extends State<detailPage> {
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: Padding(
-                            padding: EdgeInsets.all(7.0),
+                            padding: const EdgeInsets.all(7.0),
                             child: Text(getReviewList(_reviews))
                             // TextField(
                             //   keyboardType: TextInputType.text,
@@ -245,12 +244,12 @@ class _detailPageState extends State<detailPage> {
                   .snapshots(),
               builder: (context, snapshot) {
                 if (!snapshot.hasData) {
-                  return Text('Something went wrong');
+                  return const Text('Something went wrong');
                 }
 
                 bool _favoriteButtonPressed = snapshot.data!['favorite'];
-                double _xcoordinate = 0.00000001;
-                double _ycoordinate = 0.00000001;
+                double _xcoordinate = snapshot.data!['coordinate'][0];
+                double _ycoordinate = snapshot.data!['coordinate'][1];
 
                 return AppBar(
                   elevation: 0,
@@ -273,7 +272,6 @@ class _detailPageState extends State<detailPage> {
                       onPressed: () {
                         setState(() {
                           _favoriteButtonPressed = !_favoriteButtonPressed;
-                          print(_favoriteButtonPressed);
                           FirebaseFirestore.instance
                               .collection('cae')
                               .doc(widget.cafeName)
