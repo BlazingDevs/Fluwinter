@@ -17,70 +17,6 @@ class detailPage extends StatefulWidget {
 }
 
 class _detailPageState extends State<detailPage> {
-  // List<double> _allcoordinate = [0.0001,0.0001];
-
-  PreferredSizeWidget _appBarWidget() {
-    DocumentReference _documentReference =
-        FirebaseFirestore.instance.collection('cae').doc(widget.cafeName);
-
-    // dynamic favorite = StreamBuilder<DocumentSnapshot>(
-    //   stream: _documentReference.snapshots(),
-    //   builder: (context, currentUserDocSnapshot) {
-    //     if (!currentUserDocSnapshot.hasData) {
-    //       return Center(
-    //           child: CircularProgressIndicator(
-    //         backgroundColor: Colors.deepPurple,
-    //       ));
-    //     }
-    //     return Text(currentUserDocSnapshot.data!["username"]);
-    //   },
-    // );
-
-    // print("여기야 ${favorite.data['favorite']}");
-
-    bool _favoriteButtonPressed = widget.likedStatus;
-    double _xcoordinate = 0.00000001;
-    double _ycoordinate = 0.00000001;
-
-    return AppBar(
-      elevation: 0,
-      leading: IconButton(
-        icon: const Icon(Icons.arrow_back),
-        onPressed: () {
-          Navigator.pop(context);
-        },
-      ),
-      backgroundColor: Colors.transparent,
-      actions: [
-        IconButton(
-          icon: Icon(
-            _favoriteButtonPressed ? Icons.favorite : Icons.favorite_border,
-          ),
-          color: Colors.red,
-          iconSize: 25.0,
-          onPressed: () {
-            setState(() {
-              _favoriteButtonPressed = !_favoriteButtonPressed;
-              print(_favoriteButtonPressed);
-              _documentReference.update({'favorite': _favoriteButtonPressed});
-            });
-            ;
-          },
-        ),
-        IconButton(
-          icon: const Icon(Icons.location_pin),
-          onPressed: () {
-            Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => detailMapPage(
-                      xcoordinate: _xcoordinate,
-                      ycoordinate: _ycoordinate,
-                    )));
-          },
-        ),
-      ],
-    );
-  }
-
   Widget _tagWidget(int tag) {
     String tag_string = "태그";
 
@@ -300,7 +236,66 @@ class _detailPageState extends State<detailPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         extendBodyBehindAppBar: true,
-        appBar: _appBarWidget(),
+        appBar: PreferredSize(
+            preferredSize: const Size(double.infinity, kToolbarHeight),
+            child: StreamBuilder<DocumentSnapshot>(
+              stream: FirebaseFirestore.instance
+                  .collection('cae')
+                  .doc(widget.cafeName)
+                  .snapshots(),
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                  return Text('Something went wrong');
+                }
+
+                bool _favoriteButtonPressed = snapshot.data!['favorite'];
+                double _xcoordinate = 0.00000001;
+                double _ycoordinate = 0.00000001;
+
+                return AppBar(
+                  elevation: 0,
+                  leading: IconButton(
+                    icon: const Icon(Icons.arrow_back),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                  backgroundColor: Colors.transparent,
+                  actions: [
+                    IconButton(
+                      icon: Icon(
+                        _favoriteButtonPressed
+                            ? Icons.favorite
+                            : Icons.favorite_border,
+                      ),
+                      color: Colors.red,
+                      iconSize: 25.0,
+                      onPressed: () {
+                        setState(() {
+                          _favoriteButtonPressed = !_favoriteButtonPressed;
+                          print(_favoriteButtonPressed);
+                          FirebaseFirestore.instance
+                              .collection('cae')
+                              .doc(widget.cafeName)
+                              .update({'favorite': _favoriteButtonPressed});
+                        });
+                        ;
+                      },
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.location_pin),
+                      onPressed: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => detailMapPage(
+                                  xcoordinate: _xcoordinate,
+                                  ycoordinate: _ycoordinate,
+                                )));
+                      },
+                    ),
+                  ],
+                );
+              },
+            )),
         body: _bodyWidget());
   }
 }
