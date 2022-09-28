@@ -7,9 +7,7 @@ import 'package:cafegation/models/cafe.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class detailPage extends StatefulWidget {
-  const detailPage(
-      {Key? key, required this.cafeName})
-      : super(key: key);
+  const detailPage({Key? key, required this.cafeName}) : super(key: key);
 
   final String cafeName;
   @override
@@ -244,7 +242,7 @@ class _detailPageState extends State<detailPage> {
                       if (!userSnapshot.hasData) {
                         return const Text('Something went wrong');
                       }
-                      bool _favoriteButtonPressed = widget.likedStatus;
+                      bool _favoriteButtonPressed = false;
 
                       var b = userSnapshot.data!['favorites'];
                       var list = [];
