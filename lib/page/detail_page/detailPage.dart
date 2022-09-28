@@ -4,6 +4,7 @@ import 'package:cafegation/page/location_page/locationPage.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cafegation/models/cafe.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class detailPage extends StatefulWidget {
   const detailPage(
@@ -22,22 +23,22 @@ class _detailPageState extends State<detailPage> {
 
     switch (tag) {
       case 1:
-        tagString = "bakery_cafe";
+        tagString = "디저트";
         break;
       case 2:
-        tagString = "brunch_cafe";
+        tagString = "브런치";
         break;
       case 3:
-        tagString = "healing_cafe";
+        tagString = "힐링되는";
         break;
       case 4:
-        tagString = "instagram_cafe";
+        tagString = "인스타 갬성,,";
         break;
       case 5:
-        tagString = "new_cafe";
+        tagString = "새로 생긴";
         break;
       case 6:
-        tagString = "view_cafe";
+        tagString = "뷰가 좋은";
         break;
     }
 
@@ -206,19 +207,7 @@ class _detailPageState extends State<detailPage> {
                         ),
                         child: Padding(
                             padding: const EdgeInsets.all(7.0),
-                            child: Text(getReviewList(_reviews))
-                            // TextField(
-                            //   keyboardType: TextInputType.text,
-                            //   textAlign: TextAlign.left,
-                            //   onChanged: (value) {
-                            //     review = value;
-                            //   },
-                            //   decoration: const InputDecoration(
-                            //     border: UnderlineInputBorder(),
-                            //     labelText: '리뷰를 작성해주세요.',
-                            //   ),
-                            // ),
-                            ),
+                            child: Text(getReviewList(_reviews))),
                       ),
                     ],
                   ),
@@ -238,62 +227,108 @@ class _detailPageState extends State<detailPage> {
         appBar: PreferredSize(
             preferredSize: const Size(double.infinity, kToolbarHeight),
             child: StreamBuilder<DocumentSnapshot>(
-              stream: FirebaseFirestore.instance
-                  .collection('cae')
-                  .doc(widget.cafeName)
-                  .snapshots(),
-              builder: (context, snapshot) {
-                if (!snapshot.hasData) {
-                  return const Text('Something went wrong');
-                }
+                stream: FirebaseFirestore.instance
+                    .collection('cae')
+                    .doc(widget.cafeName)
+                    .snapshots(),
+                builder: (context, snapshot) {
+                  if (!snapshot.hasData) {
+                    return const Text('Something went wrong');
+                  }
 
-                bool _favoriteButtonPressed = snapshot.data!['favorite'];
-                double _xcoordinate = snapshot.data!['coordinate'][0];
-                double _ycoordinate = snapshot.data!['coordinate'][1];
+                  return StreamBuilder<DocumentSnapshot>(
+                    stream: FirebaseFirestore.instance
+                        .collection('user_data')
+                        .doc(FirebaseAuth.instance.currentUser!.uid)
+                        .snapshots(),
+                    builder: (context, userSnapshot) {
+                      if (!userSnapshot.hasData) {
+                        return const Text('Something went wrong');
+                      }
+                      bool _favoriteButtonPressed = widget.likedStatus;
 
-                return AppBar(
-                  elevation: 0,
-                  leading: IconButton(
-                    icon: const Icon(Icons.arrow_back),
-                    onPressed: () {
-                      Navigator.pop(context);
+                      var b = userSnapshot.data!['favorites'];
+                      var list = [];
+
+                      for (var d in b) {
+                        d = d['id'];
+                        list.add(d.toString());
+                      }
+
+                      if (list.contains(widget.cafeName)) {
+                        _favoriteButtonPressed = true;
+                      } else {
+                        _favoriteButtonPressed = false;
+                      }
+
+                      double _xcoordinate = snapshot.data!['coordinate'][0];
+                      double _ycoordinate = snapshot.data!['coordinate'][1];
+
+                      return AppBar(
+                        elevation: 0,
+                        leading: IconButton(
+                          icon: const Icon(Icons.arrow_back),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                        ),
+                        backgroundColor: Colors.transparent,
+                        actions: [
+                          IconButton(
+                            icon: Icon(
+                              _favoriteButtonPressed
+                                  ? Icons.favorite
+                                  : Icons.favorite_border,
+                            ),
+                            color: Colors.red,
+                            iconSize: 25.0,
+                            onPressed: () {
+                              setState(() {
+                                _favoriteButtonPressed =
+                                    !_favoriteButtonPressed;
+
+                                var list = [
+                                  {
+                                    "id": widget.cafeName,
+                                    "tag": snapshot.data!['tags'],
+                                  }
+                                ];
+
+                                if (_favoriteButtonPressed == true) {
+                                  FirebaseFirestore.instance
+                                      .collection('user_data')
+                                      .doc(FirebaseAuth
+                                          .instance.currentUser!.uid)
+                                      .set({
+                                    "favorites": FieldValue.arrayUnion(list)
+                                  }, SetOptions(merge: true));
+                                } else {
+                                  FirebaseFirestore.instance
+                                      .collection('user_data')
+                                      .doc(FirebaseAuth
+                                          .instance.currentUser!.uid)
+                                      .set({
+                                    "favorites": FieldValue.arrayRemove(list)
+                                  }, SetOptions(merge: true));
+                                }
+                              });
+                            },
+                          ),
+                          IconButton(
+                            icon: const Icon(Icons.location_pin),
+                            onPressed: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => detailMapPage(
+                                        xcoordinate: _xcoordinate,
+                                        ycoordinate: _ycoordinate,
+                                      )));
+                            },
+                          ),
+                        ],
+                      );
                     },
-                  ),
-                  backgroundColor: Colors.transparent,
-                  actions: [
-                    IconButton(
-                      icon: Icon(
-                        _favoriteButtonPressed
-                            ? Icons.favorite
-                            : Icons.favorite_border,
-                      ),
-                      color: Colors.red,
-                      iconSize: 25.0,
-                      onPressed: () {
-                        setState(() {
-                          _favoriteButtonPressed = !_favoriteButtonPressed;
-                          FirebaseFirestore.instance
-                              .collection('cae')
-                              .doc(widget.cafeName)
-                              .update({'favorite': _favoriteButtonPressed});
-                        });
-                        ;
-                      },
-                    ),
-                    IconButton(
-                      icon: const Icon(Icons.location_pin),
-                      onPressed: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => detailMapPage(
-                                  xcoordinate: _xcoordinate,
-                                  ycoordinate: _ycoordinate,
-                                )));
-                      },
-                    ),
-                  ],
-                );
-              },
-            )),
+                  );
+                })),
         body: _bodyWidget());
   }
 }
