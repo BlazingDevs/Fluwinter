@@ -54,7 +54,6 @@ class _SearchScreenState extends State<SearchScreen> {
 
   Widget _buildListItem(BuildContext context, DocumentSnapshot data) {
     final cafe = DataBaseService.instance.cafeBuilder(data);
-    final state = false;
 
     return InkWell(
       child: Image.network(cafe.images),
@@ -71,7 +70,6 @@ class _SearchScreenState extends State<SearchScreen> {
           MaterialPageRoute(
               builder: (context) => detailPage(
                     cafeName: cafe.id,
-                    likedStatus: state,
                   )),
         );
       },
