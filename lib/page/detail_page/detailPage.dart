@@ -7,11 +7,10 @@ import 'package:cafegation/models/cafe.dart';
 
 class detailPage extends StatefulWidget {
   const detailPage(
-      {Key? key, required this.cafeName, required this.likedStatus})
+      {Key? key, required this.cafeName})
       : super(key: key);
 
   final String cafeName;
-  final bool likedStatus;
   @override
   _detailPageState createState() => _detailPageState();
 }

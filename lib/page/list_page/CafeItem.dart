@@ -37,7 +37,6 @@ class _CafeItemState extends State<CafeItem> {
             MaterialPageRoute(
                 builder: (context) => detailPage(
                       cafeName: widget.cafe.id,
-                      likedStatus: state,
                     )),
           );
         },
